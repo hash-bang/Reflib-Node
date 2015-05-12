@@ -1,0 +1,29 @@
+{
+  "name": "reflib",
+  "version": "0.0.0",
+  "description": "Reference library processing for Node",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hash-bang/Reflib"
+  },
+  "keywords": [
+    "endnote",
+    "endnotexml",
+    "references",
+    "library",
+    "xml",
+    "parser"
+  ],
+  "author": "Matt Carter <m@ttcarter.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hash-bang/Reflib-Node/issues"
+  },
+  "homepage": "https://github.com/hash-bang/Reflib-Node",
+  "dependencies": {
+    "lodash": "^3.8.0",
+    "reflib-endnotexml": "0.0.0"
+  },
+  "devDependencies": {}
+}
