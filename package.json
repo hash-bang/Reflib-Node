@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "Reference library processing for Node",
   "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/hash-bang/Reflib"
@@ -25,5 +28,8 @@
     "lodash": "^3.8.0",
     "reflib-endnotexml": "0.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.4"
+  }
 }
