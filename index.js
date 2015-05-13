@@ -24,4 +24,10 @@ module.exports = {
 		if (!supported) throw new Error('Format is unsupported: ' + format);
 		return supported.driver.parse(input);
 	},
+
+	output: function(format, callback) {
+		var supported = _.find(this.supported, {id: format});
+		if (!supported) throw new Error('Format is unsupported: ' + format);
+		return supported.driver.output(callback);
+	},
 };
