@@ -16,7 +16,7 @@ module.exports = {
 		var found = _.find(this.supported, function(format) {
 			return _.contains(format.ext, ext);
 		});
-		return found ? found : false;
+		return found ? found.id : false;
 	},
 
 	parse: function(format, input) {
