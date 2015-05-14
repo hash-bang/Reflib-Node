@@ -1,6 +1,6 @@
 {
   "name": "reflib",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Reference library processing for Node",
   "main": "index.js",
   "scripts": {
