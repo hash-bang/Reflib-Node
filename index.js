@@ -7,6 +7,7 @@ module.exports = {
 			id: 'endnotexml',
 			name: 'EndNote XML file',
 			ext: ['.xml'],
+			filename: 'endnote.xml',
 			driver: require('reflib-endnotexml'),
 		},
 	],
@@ -25,9 +26,13 @@ module.exports = {
 		return supported.driver.parse(input);
 	},
 
-	output: function(format, callback) {
-		var supported = _.find(this.supported, {id: format});
-		if (!supported) throw new Error('Format is unsupported: ' + format);
-		return supported.driver.output(callback);
+	output: function(options) {
+		if (!_.isObject(options)) throw new Error('output(options) must be an object');
+		if (!options.format) throw new Error('output(options) must specify a format');
+
+		var supported = _.find(this.supported, {id: options.format});
+		if (!supported) throw new Error('Format is unsupported: ' + options.format);
+
+		return supported.driver.output(options);
 	},
 };
