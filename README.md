@@ -25,6 +25,24 @@ The main parser function. This will take a string or buffer to process and retur
 		});
 
 
+output(options)
+---------------
+Output a reference library.
+
+The options object must at least contain `stream` and `content` properties. Other options supported are:
+
+| Option           | Type                   | Description                                                                                     |
+|------------------|------------------------|-------------------------------------------------------------------------------------------------|
+| stream           | Stream.Writable stream | The stream object to output content into                                                        |
+| defaultType      | String                 | Some libraries must have a reference type for each reference, if that is omitted use this value |
+| encode           | Callback               | Overridable callback to use on each reference output                                            |
+| escape           | Callback               | Overridable callback to use when encoding text                                                  |
+| content          | Array or Object or Callback | The reference library to output. If an array each item is used in turn, if an object a single item is output, if a callback this is called with the arguments (next, batchNo) until it returns null. The callback function can return a single object or an array |
+
+
+See the output tests of individual drivers for more examples.
+
+
 identify(path)
 --------------
 Function to return the supported driver from a file name.
