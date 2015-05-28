@@ -6,7 +6,7 @@ module.exports = {
 		{
 			id: 'endnotexml',
 			name: 'EndNote XML file',
-			ext: ['.xml', '.enlx'],
+			ext: ['.xml'],
 			filename: 'endnote.xml',
 			driver: require('reflib-endnotexml'),
 		},
