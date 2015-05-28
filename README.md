@@ -76,7 +76,7 @@ Each reference is made up of the following fields. Each field is optional and ma
 | recNumber         | Number             | The sorting number of the reference |
 | type              | String             | A supported [reference type](#reference-types) |
 | title             | String             | The reference's main title |
-| titleSecondary    | String             | The reference's secondary title, this is usually the journal for most published papers |
+| journal           | String             | The reference's secondary title, this is usually the journal for most published papers |
 | authors           | Array (of Strings) | An array of each Author in the originally specified format |
 | date              | Date or String     | Depending on how much information can be extracted this could either be a year (e.g. '2015'), a date (e.g. '12th Feb') or a full JS date (if [Moment](http://momentjs.com) understands its format) |
 | urls              | Array (of Strings) | An array of each URL for the reference |
