@@ -26,6 +26,12 @@ module.exports = {
 		return supported.driver.parse(input);
 	},
 
+	parseFile: function(path) {
+		var driver = this.identify(path);
+		if (!driver) throw new Error('File type is unsupported');
+		return this.parse(driver, fs.readFileSync(path));
+	},
+
 	output: function(options) {
 		if (!_.isObject(options)) throw new Error('output(options) must be an object');
 		if (!options.format) throw new Error('output(options) must specify a format');
