@@ -25,6 +25,23 @@ The main parser function. This will take a string or buffer to process and retur
 		});
 
 
+parseFile(path)
+------------------
+This is a shortcut of the `identify()` and `parse()` methods together to have RefLib read and process a file:
+
+	var reflib = require('reflib');
+	reflib.parseFile('./test/data/endnote.xml')
+		.on('error', function(err) {
+			console.log('ERROR:', err);
+		})
+		.on('ref', function(ref) {
+			console.log('FOUND A REFERENCE', ref);
+		})
+		.on('end', function() {
+			console.log('All done');
+		});
+
+
 output(options)
 ---------------
 Output a reference library.
