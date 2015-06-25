@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var fs = require('fs');
 var fsPath = require('path');
 
 module.exports = {
