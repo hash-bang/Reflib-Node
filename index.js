@@ -11,6 +11,13 @@ module.exports = {
 			filename: 'endnote.xml',
 			driver: require('reflib-endnotexml'),
 		},
+		{
+			id: 'json',
+			name: 'JSON file',
+			ext: ['.json'],
+			filename: 'library.json',
+			driver: require('reflib-json'),
+		},
 	],
 
 	identify: function(filename) {

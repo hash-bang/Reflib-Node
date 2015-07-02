@@ -1,6 +1,6 @@
 {
   "name": "reflib",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Reference library processing for Node",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,8 @@
   "homepage": "https://github.com/hash-bang/Reflib-Node",
   "dependencies": {
     "lodash": "^3.8.0",
-    "reflib-endnotexml": "^1.0.3"
+    "reflib-endnotexml": "latest",
+    "reflib-json": "latest"
   },
   "devDependencies": {
     "chai": "^2.3.0",
