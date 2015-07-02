@@ -60,6 +60,22 @@ The options object must at least contain `stream` and `content` properties. Othe
 See the output tests of individual drivers for more examples.
 
 
+outputFile(path, refs)
+----------------------
+This is a shortcut of the `identify()` and `output()` methods together to have RefLib setup a stream and dump refs into a file.
+
+`refs` can be an array of references, a single object or a callback to provide references. See the `output()` function for more information.
+
+	var reflib = require('reflib');
+	reflib.outputFile('./test/data/endnote.xml', refs)
+		.on('error', function(err) {
+			console.log('ERROR:', err);
+		})
+		.on('end', function() {
+			console.log('All done');
+		});
+
+
 identify(path)
 --------------
 Function to return the supported driver from a file name.

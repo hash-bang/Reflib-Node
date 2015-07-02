@@ -49,4 +49,15 @@ module.exports = {
 
 		return supported.driver.output(options);
 	},
+
+	outputFile: function(path, refs) {
+		var driver = this.identify(path);
+		if (!driver) throw new Error('File type is unsupported');
+		var stream = fs.createWriteStream(path);
+		return this.output({
+			format: driver,
+			stream: stream,
+			content: refs,
+		});
+	},
 };
