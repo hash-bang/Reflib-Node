@@ -107,6 +107,7 @@ Each reference is made up of the following fields. Each field is optional and ma
 | notes             | String             |
 | address           | String             |
 | researchNotes     | String             |
+| tags              | Array (of Strings) | Any tags that apply to the reference |
 
 
 Reference Types
