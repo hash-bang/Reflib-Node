@@ -8,7 +8,7 @@ This is a ported version of the original [Reflib for PHP](https://github.com/has
 API
 ===
 
-parse(content)
+parse(driver, content, [callback])
 --------------
 The main parser function. This will take a string or buffer to process and return an emitter which should call `ref` for each reference found.
 
@@ -24,8 +24,15 @@ The main parser function. This will take a string or buffer to process and retur
 			console.log('All done');
 		});
 
+If the final `callback` parameter is specified the *entire* library will be returned as an array in the form `callback(error, references)`. Due to the shear size of some libraries this method is **not** recommended unless you know your RAM can safely hold this potencially huge arrray.
 
-parseFile(path)
+	reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), function(err, refs) {
+		console.log('Error is', err);
+		console.log('Refs are', refs);
+	});
+
+
+parseFile(path, [callback])
 ------------------
 This is a shortcut of the `identify()` and `parse()` methods together to have RefLib read and process a file:
 
@@ -40,6 +47,8 @@ This is a shortcut of the `identify()` and `parse()` methods together to have Re
 		.on('end', function() {
 			console.log('All done');
 		});
+
+If the optional `callback` is specified the function returns in the same way as `parse()`.
 
 
 output(options)
@@ -60,7 +69,7 @@ The options object must at least contain `stream` and `content` properties. Othe
 See the output tests of individual drivers for more examples.
 
 
-outputFile(path, refs)
+outputFile(path, refs, [callback])
 ----------------------
 This is a shortcut of the `identify()` and `output()` methods together to have RefLib setup a stream and dump refs into a file.
 
@@ -74,6 +83,8 @@ This is a shortcut of the `identify()` and `output()` methods together to have R
 		.on('end', function() {
 			console.log('All done');
 		});
+
+The final `callback` parameter is optional. If it is specified it is attached automatically as a listener on the 'error' and 'end' events.
 
 
 identify(path)

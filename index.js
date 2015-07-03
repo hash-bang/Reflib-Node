@@ -28,16 +28,24 @@ module.exports = {
 		return found ? found.id : false;
 	},
 
-	parse: function(format, input) {
+	parse: function(format, input, callback) {
 		var supported = _.find(this.supported, {id: format});
 		if (!supported) throw new Error('Format is unsupported: ' + format);
-		return supported.driver.parse(input);
+		var out = supported.driver.parse(input);
+		if (callback) { // If optional callback is specified attach to the listeners and return everything as an array
+			var refs = [];
+			out
+				.on('error', callback)
+				.on('ref', function(ref) { refs.push(ref) })
+				.on('end', function() { callback(null, refs) });
+		}
+		return out;
 	},
 
-	parseFile: function(path) {
+	parseFile: function(path, callback) {
 		var driver = this.identify(path);
 		if (!driver) throw new Error('File type is unsupported');
-		return this.parse(driver, fs.readFileSync(path));
+		return this.parse(driver, fs.readFileSync(path), callback);
 	},
 
 	output: function(options) {
@@ -50,14 +58,19 @@ module.exports = {
 		return supported.driver.output(options);
 	},
 
-	outputFile: function(path, refs) {
+	outputFile: function(path, refs, callback) {
 		var driver = this.identify(path);
 		if (!driver) throw new Error('File type is unsupported');
 		var stream = fs.createWriteStream(path);
-		return this.output({
+		var out = this.output({
 			format: driver,
 			stream: stream,
 			content: refs,
 		});
+		if (callback) { // If optional callback is specified attach it as a handler
+			out.on('error', callback);
+			out.on('finish', callback);
+		}
+		return out;
 	},
 };
