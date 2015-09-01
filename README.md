@@ -135,7 +135,22 @@ Each reference is made up of the following fields. Each field is optional and ma
 | address           | String             |
 | researchNotes     | String             |
 | tags              | Array (of Strings) | Any tags that apply to the reference |
-
+| accessDate        | String             |
+| accession         | String             |
+| doi               | String             |
+| section           | String             |
+| language          | String             |
+| researchNotes     | String             |
+| databaseProvider  | String             |
+| database          | String             |
+| workType          | String             |
+| custom1           | String             |
+| custom2           | String             |
+| custom3           | String             |
+| custom4           | String             |
+| custom5           | String             |
+| custom6           | String             |
+| custom7           | String             |
 
 Reference Types
 ---------------
