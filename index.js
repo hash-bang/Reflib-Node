@@ -60,7 +60,7 @@ module.exports = {
 
 	outputFile: function(path, refs, callback) {
 		var driver = this.identify(path);
-		if (!driver) throw new Error('File type is unsupported');
+		if (!driver) throw new Error('File type is unsupported for path: ' + path);
 		var stream = fs.createWriteStream(path);
 		var out = this.output({
 			format: driver,
