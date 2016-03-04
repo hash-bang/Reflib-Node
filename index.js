@@ -23,7 +23,7 @@ module.exports = {
 	identify: function(filename) {
 		var ext = fsPath.extname(filename).toLowerCase();
 		var found = _.find(this.supported, function(format) {
-			return _.contains(format.ext, ext);
+			return _.includes(format.ext, ext);
 		});
 		return found ? found.id : false;
 	},
