@@ -8,7 +8,7 @@ This is a ported version of the original [Reflib for PHP](https://github.com/has
 API
 ===
 
-parse(driver, content, [callback])
+parse(driver, content, [options], [callback])
 --------------
 The main parser function. This will take a string or buffer to process and return an emitter which should call `ref` for each reference found.
 
@@ -24,7 +24,17 @@ The main parser function. This will take a string or buffer to process and retur
 			console.log('All done');
 		});
 
-If the final `callback` parameter is specified the *entire* library will be returned as an array in the form `callback(error, references)`. Due to the shear size of some libraries this method is **not** recommended unless you know your RAM can safely hold this potencially huge arrray.
+
+The `options` parameter is an optional object of properties.
+
+| Option        | Type    | Default | Description                                                                                          |
+|---------------|---------|---------|------------------------------------------------------------------------------------------------------|
+| `fixes`       | Object  | `{}`    | Object containing fixes behaviour to apply to each returned reference. These are all run in parallel |
+| `fixes.dates` | Boolean | `false` | Apply the behaviour of `reflib.fix.dates(ref)` before returning the reference via event handler      |
+| `fixes.pages` | Boolean | `false` | Apply the behaviour of `reflib.fix.pages(ref)` before returning the reference via event handler      |
+
+
+If the final, optional `callback` parameter is specified the *entire* library will be returned as an array in the form `callback(error, references)`. Due to the shear size of some libraries this method is **not** recommended unless you know your RAM can safely hold this potencially huge arrray.
 
 	reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), function(err, refs) {
 		console.log('Error is', err);
@@ -32,7 +42,7 @@ If the final `callback` parameter is specified the *entire* library will be retu
 	});
 
 
-parseFile(path, [callback])
+parseFile(path, [options], [callback])
 ------------------
 This is a shortcut of the `identify()` and `parse()` methods together to have RefLib read and process a file:
 
@@ -48,7 +58,9 @@ This is a shortcut of the `identify()` and `parse()` methods together to have Re
 			console.log('All done');
 		});
 
-If the optional `callback` is specified the function returns in the same way as `parse()`.
+See the `parse()` function for a description of supported options.
+
+If the final, optional `callback` is specified the function returns in the same way as `parse()`.
 
 
 output(options)

@@ -8,7 +8,11 @@ describe('EndNote XML parser - test #1', function() {
 
 	before(function(next) {
 		this.timeout(60 * 1000);
-		rl.parseFile(__dirname + '/data/endnote.xml')
+		rl.parseFile(__dirname + '/data/endnote.xml', {
+			fixes: {
+				pages: true,
+			},
+		})
 			.on('error', function(err) {
 				resErr = err;
 				next();
@@ -43,7 +47,7 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample.authors).to.have.length(1);
 		expect(sample.authors[0]).to.equal('Agati, Salvatore; Mignosa, Carmelo; Gitto, Placido; Trimarchi, Eugenio Santo; Ciccarello, Giuseppe; Salvo, Dario; Trimarchi, Giuseppe');
 		expect(sample).to.have.property('address', 'Pediatric Cardiac Surgery Unit, San Vincenzo Hospital, Taormina, Messina, Italy. sasha.agati@tiscali.it');
-		expect(sample).to.have.property('pages', '1306-9');
+		expect(sample).to.have.property('pages', '1306-1309');
 		expect(sample).to.have.property('volume', '131');
 		expect(sample).to.have.property('number', '6');
 		expect(sample).to.have.property('date', 'Jun 2006');
@@ -94,7 +98,7 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample.authors).to.have.length(7);
 		expect(sample.authors).to.deep.equal(['Paschoalini, Marcello da Silveira','Vargas, Francisco S.','Marchi, Evaldo','Pereira, Jose Rodrigues','Jatene, Fabio B.','Antonangelo, Leila','Light, Richard W.']);
 		expect(sample).to.have.property('address', 'Perola Byington Hospital, Sao Paulo, Brazil.');
-		expect(sample).to.have.property('pages', '684-9');
+		expect(sample).to.have.property('pages', '684-689');
 		expect(sample).to.have.property('volume', '128');
 		expect(sample).to.have.property('number', '2');
 		expect(sample).to.have.property('date', 'Aug 2005');
