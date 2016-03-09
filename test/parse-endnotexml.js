@@ -10,6 +10,7 @@ describe('EndNote XML parser - test #1', function() {
 		this.timeout(60 * 1000);
 		rl.parseFile(__dirname + '/data/endnote.xml', {
 			fixes: {
+				authors: true,
 				pages: true,
 			},
 		})
@@ -46,8 +47,8 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample).to.have.property('title', 'A method for chest drainage after pediatric cardiac surgery: a prospective randomized trial');
 		expect(sample).to.have.property('journal', 'Journal of Thoracic & Cardiovascular Surgery');
 		expect(sample).to.have.property('authors');
-		expect(sample.authors).to.have.length(1);
-		expect(sample.authors[0]).to.equal('Agati, Salvatore; Mignosa, Carmelo; Gitto, Placido; Trimarchi, Eugenio Santo; Ciccarello, Giuseppe; Salvo, Dario; Trimarchi, Giuseppe');
+		expect(sample.authors).to.have.length(7);
+		expect(sample.authors).to.deep.equal(['Agati, Salvatore', 'Mignosa, Carmelo', 'Gitto, Placido', 'Trimarchi, Eugenio Santo', 'Ciccarello, Giuseppe', 'Salvo, Dario', 'Trimarchi, Giuseppe']);
 		expect(sample).to.have.property('address', 'Pediatric Cardiac Surgery Unit, San Vincenzo Hospital, Taormina, Messina, Italy. sasha.agati@tiscali.it');
 		expect(sample).to.have.property('pages', '1306-1309');
 		expect(sample).to.have.property('volume', '131');
@@ -98,7 +99,7 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample).to.have.property('journal', 'Chest');
 		expect(sample).to.have.property('authors');
 		expect(sample.authors).to.have.length(7);
-		expect(sample.authors).to.deep.equal(['Paschoalini, Marcello da Silveira','Vargas, Francisco S.','Marchi, Evaldo','Pereira, Jose Rodrigues','Jatene, Fabio B.','Antonangelo, Leila','Light, Richard W.']);
+		expect(sample.authors).to.deep.equal(['Paschoalini, Marcello da Silveira','Vargas, Francisco S.','Marchi, Evaldo','Pereira, Jose Rodrigues','Jatene, Fabio B.','Antonangelo, Leila','Light, Richard W.'], 'authors');
 		expect(sample).to.have.property('address', 'Perola Byington Hospital, Sao Paulo, Brazil.');
 		expect(sample).to.have.property('pages', '684-689');
 		expect(sample).to.have.property('volume', '128');
@@ -123,7 +124,7 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample).to.have.property('journal', 'Respirology');
 		expect(sample).to.have.property('authors');
 		expect(sample.authors).to.have.length(5);
-		expect(sample.authors).to.deep.equal(['Agarwal, Ritesh','Paul, Abinash S.','Aggarwal, Ashutosh N.','Gupta, Dheeraj','Jindal, Surinder K.']);
+		expect(sample.authors).to.deep.equal(['Agarwal, Ritesh','Paul, Abinash S.','Aggarwal, Ashutosh N.','Gupta, Dheeraj','Jindal, Surinder K.'], 'authors');
 		expect(sample).to.have.property('pages', '1064-1069');
 		expect(sample).to.have.property('volume', '16');
 		expect(sample).to.have.property('number', '7');
@@ -135,7 +136,6 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample).to.have.property('notes', 'EM');
 		expect(sample).to.have.property('isbn', "1440-1843");
 		expect(sample).to.have.property('urls');
-		expect(sample.urls).to.have.length(2);
-		expect(sample.urls).to.deep.equal(['http://ovidsp.ovid.com/ovidweb.cgi?T=JS&amp;CSC=Y&amp;NEWS=N&amp;PAGE=fulltext&amp;D=medl&amp;AN=21605278; http://ZL9EQ5LQ7V.search.serialssolutions.com/?sid=OVID:medline&amp;id=pmid:21605278&amp;id=doi:10.1111%2Fj.1440-1843.2011.01999.x&amp;issn=1323-7799&amp;isbn=&amp;volume=16&amp;issue=7&amp;spage=1064&amp;pages=1064-9&amp;date=2011&amp;title=Respirology&amp;atitle=A+randomized+controlled+trial+of+the+efficacy+of+cosmetic+talc+compared+with+iodopovidone+for+chemical+pleurodesis.&amp;aulast=Agarwal&amp;pid=%3Cauthor%3EAgarwal+R%3BPaul+AS%3BAggarwal+AN%3BGupta+D%3BJindal+SK%3C%2Fauthor%3E%3CAN%3E21605278%3C%2FAN%3E%3CDT%3EJournal+Article%3C%2FDT%3E'], 'urls');
+		expect(sample.urls).to.have.length(1);
 	});
 });

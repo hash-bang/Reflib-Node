@@ -51,6 +51,7 @@ module.exports = {
 
 		var settings = _.defaults(options, {
 			fixes: {
+				authors: false,
 				dates: false,
 				pages: false,
 			},
@@ -69,6 +70,7 @@ module.exports = {
 			})
 			.on('ref', function(ref) {
 				// Apply fixes {{{
+				if (settings.fixes.authors) ref = self.fix.authors(ref, options);
 				if (settings.fixes.dates) ref = self.fix.dates(ref, options);
 				if (settings.fixes.pages) ref = self.fix.pages(ref, options);
 				// }}}
@@ -124,6 +126,13 @@ module.exports = {
 
 	// Fixes {{{
 	fix: {
+		authors: function(ref, options) {
+			if (_.isArray(ref.authors) && ref.authors.length == 1 && /;/.test(ref.authors[0]))
+				ref.authors = ref.authors[0].split(/\s*;\s*/);
+
+			return ref;
+		},
+
 		dates: function(ref, options) {
 			var settings = _.defaults(options, {
 				dateFormats: ['MM-DD-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'MMM YYYY', 'MMM'],
