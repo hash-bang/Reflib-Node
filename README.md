@@ -118,6 +118,34 @@ A collection of all supported drivers.
 	// {id: 'endnotexml', name: 'EndNote XML file', ext: ['.xml'], driver [object]}
 
 
+fix.authors(reference)
+----------------------
+Verify that the author information for an incomming reference is correct.
+
+This function will attempt to split mangled author fields up if the `authors` field contains exactly one entry which itself contains the `;` character. Some databases don't split this field up correctly and this fix will attempt to correct the array contents to what it should be.
+
+
+fix.dates(reference)
+--------------------
+Attempt to correct the date format of incomming references.
+
+This function has the following behaviour:
+
+1. If the reference has a complete date format (e.g. 15/02/2016) the fields, `date`, `month` and `year` will be created
+2. If the reference is missing the full date but contains a `year` and `month` those two fields will be stored with `date` removed
+3. If the reference only has a `month` field that will be stored with `date` removed
+4. If the reference only has a `year` field that will be stored with `year` removed
+
+In all cases `date` will be a JavaScript date object, `year` will be a JavaScript four digit number, `month` will be the three letter, capitalized month format (e.g. `Jan`, `Dec`).
+
+
+fix.pages(reference)
+--------------------
+Attempt to reformat different reference page formats into absolute ones.
+
+For example `123-4` becomes `123-124`
+
+
 Reference format
 ================
 The following documents the individual reference format used by Reflib.
