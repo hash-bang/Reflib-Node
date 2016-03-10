@@ -28,11 +28,11 @@ describe('RefLib - fix.dates()', function() {
 	it('should parse just the month into an individual field', function() {
 		var ref = rl.fix.dates({
 			title: 'Test paper',
-			date: 'Feburary',
+			date: 'February',
 		});
 
 		expect(ref).to.not.have.property('year');
-		expect(ref).to.have.property('month', 'feb');
+		expect(ref).to.have.property('month', 'Feb');
 		expect(ref).to.not.have.property('date');
 	});
 
@@ -56,7 +56,7 @@ describe('RefLib - fix.dates()', function() {
 		expect(ref).to.have.property('year', 2013);
 		expect(ref).to.have.property('month', 'Dec');
 		expect(ref).to.have.property('date');
-		expect(ref.date).to.equal(new Date(2016, 12, 1));
+		expect(ref.date).to.deep.equal(new Date(2013, 11, 1));
 	});
 
 	it('should parse full dates #2', function() {
@@ -68,6 +68,6 @@ describe('RefLib - fix.dates()', function() {
 		expect(ref).to.have.property('year', 2014);
 		expect(ref).to.have.property('month', 'Mar');
 		expect(ref).to.have.property('date');
-		expect(ref.date).to.equal(new Date(2014, 3, 15));
+		expect(ref.date).to.deep.equal(new Date(2014, 2, 15));
 	});
 });

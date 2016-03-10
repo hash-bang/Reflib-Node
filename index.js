@@ -135,42 +135,47 @@ module.exports = {
 
 		dates: function(ref, options) {
 			var settings = _.defaults(options, {
-				dateFormats: ['MM-DD-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'MMM YYYY', 'MMM'],
+				dateFormats: [
+					{format: 'MM-DD-YYYY', year: true, month: true, day: true}, 
+					{format: 'DD/MM/YYYY', year: true, month: true, day: true}, 
+					{format: 'DD-MM-YYYY', year: true, month: true, day: true}, 
+					{format: 'YYYY-MM-DD', year: true, month: true, day: true},
+					{format: 'Do MMMM YY', year: true, month: true, day: true},
+					{format: 'Do MMMM YYYY', year: true, month: true, day: true},
+					{format: 'MMM YYYY', year: true, month: true, day: false},
+					{format: 'MMM', year: false, month: true, day: false},
+					{format: 'MMMM', year: false, month: true, day: false},
+					{format: 'YYYY', year: true, month: false, day: false},
+				],
 			});
 
 			var baseYear = 1000; // Anything equal to this is assumed not to provide a year
 			moment.now = function() { return +new Date(baseYear, 1, 1) }; // Force Moment to use baseYear as the basis when parsing
-			var momentParsed = moment(ref.date, settings.dateFormats, true);
-			console.log('PARSE', ref.date, momentParsed.isValid(), momentParsed.year(), momentParsed.month());
+			var momentParsed = moment(ref.date, settings.dateFormats.map(function(f) { return f.format }), true);
 
-			if (ref.date && momentParsed.isValid()) { // Date is fully valid
-				if (momentParsed.year() == baseYear) { // Parsed but only date component is useful
-					ref.month = momentParsed.month();
-					delete ref.date;
-					delete ref.year;
-					return ref;
-				} else {
+			if (ref.date && momentParsed.isValid()) { // Moment matched something
+				var dateFormat = settings.dateFormats.find(function(f) { return (f.format == momentParsed._f) });
+				if (!dateFormat) throw new Error('Moment parsed date but cannot locate matching format it used!');
+
+				if (dateFormat.year && dateFormat.month && dateFormat.day) { // Date format is fully formed
 					ref.date = momentParsed.toDate();
-					return ref;
+				} else {
+					delete ref.date;
+				}
+
+				if (dateFormat.year) {
+					ref.year = momentParsed.year();
+				} else {
+					delete ref.year;
+				}
+
+				if (dateFormat.month) {
+					ref.month = momentParsed.format('MMM');
+				} else {
+					delete ref.month;
 				}
 			}
 
-			momentParsed = moment(ref.date + ' ' + ref.year, settings.dateFormats, true);
-			if (ref.year && ref.date && momentParsed.isValid()) { // Possible full date combined
-				ref.date = momentParsed.toDate();
-				return ref;
-			} else if (ref.year && ref.date && ref.date != ref.date + ' ' + ref.year) { // Has both date + year but is unparsable
-				ref.date = ref.date + ' ' + ref.year;
-				return ref;
-			} else if (ref.year) { // Just a year
-				delete ref.date;
-				return ref;
-			} else if (ref.date) { // Just a date - unparsable
-				delete ref.year;
-				return ref;
-			}
-			
-			// FIXME: Stub
 			return ref;
 		},
 
