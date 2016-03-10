@@ -159,21 +159,10 @@ module.exports = {
 
 				if (dateFormat.year && dateFormat.month && dateFormat.day) { // Date format is fully formed
 					ref.date = momentParsed.toDate();
-				} else {
-					delete ref.date;
 				}
 
-				if (dateFormat.year) {
-					ref.year = momentParsed.year();
-				} else {
-					delete ref.year;
-				}
-
-				if (dateFormat.month) {
-					ref.month = momentParsed.format('MMM');
-				} else {
-					delete ref.month;
-				}
+				if (dateFormat.year) ref.year = momentParsed.year();
+				if (dateFormat.month) ref.month = momentParsed.format('MMM');
 			}
 
 			return ref;

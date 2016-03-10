@@ -11,6 +11,7 @@ describe('EndNote XML parser - test #1', function() {
 		rl.parseFile(__dirname + '/data/endnote.xml', {
 			fixes: {
 				authors: true,
+				dates: true,
 				pages: true,
 			},
 		})
@@ -53,7 +54,8 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample).to.have.property('pages', '1306-1309');
 		expect(sample).to.have.property('volume', '131');
 		expect(sample).to.have.property('number', '6');
-		expect(sample).to.have.property('date', 'Jun 2006');
+		expect(sample).to.have.property('year', '2006');
+		expect(sample).to.have.property('month', 'Jun');
 		expect(sample).to.have.property('abstract');
 		expect(sample.abstract).to.match(/^OBJECTIVES: .*removal\.$/);
 		expect(sample).to.have.property('label', 'OK');
@@ -79,7 +81,7 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample).to.have.property('pages', '76-84');
 		expect(sample).to.have.property('volume', '27');
 		expect(sample).to.have.property('number', '3');
-		expect(sample).to.have.property('date', '2013');
+		expect(sample).to.have.property('year', '2013');
 		expect(sample).to.have.property('abstract');
 		expect(sample.abstract).to.match(/^The efficacy of everolimus.*2013 Elsevier Inc\.$/);
 		expect(sample).to.have.property('label', 'OK');
@@ -104,7 +106,8 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample).to.have.property('pages', '684-689');
 		expect(sample).to.have.property('volume', '128');
 		expect(sample).to.have.property('number', '2');
-		expect(sample).to.have.property('date', 'Aug 2005');
+		expect(sample).to.have.property('year', '2005');
+		expect(sample).to.have.property('month', 'Aug');
 		expect(sample).to.have.property('abstract');
 		expect(sample.abstract).to.match(/production of a pleurodesis\.$/);
 		expect(sample).to.have.property('label', 'OK');
@@ -128,7 +131,8 @@ describe('EndNote XML parser - test #1', function() {
 		expect(sample).to.have.property('pages', '1064-1069');
 		expect(sample).to.have.property('volume', '16');
 		expect(sample).to.have.property('number', '7');
-		expect(sample).to.have.property('date', 'Oct 2011');
+		expect(sample).to.have.property('year', '2011');
+		expect(sample).to.have.property('month', 'Oct');
 		expect(sample).to.have.property('abstract');
 		expect(sample.abstract).to.match(/39 with iodopovidone,/);
 		expect(sample).to.have.property('label', 'OK');
