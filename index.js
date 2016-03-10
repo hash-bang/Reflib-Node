@@ -40,7 +40,7 @@ module.exports = {
 		{id: 'classicalWork', title: 'Classical Work'},
 		{id: 'computerProgram', title: 'Computer Program'},
 		{id: 'conferencePaper', title: 'Conference Paper'},
-		{id: 'conferenceProceedings', title:', Conference Proceedings'},
+		{id: 'conferenceProceedings', title:'Conference Proceedings'},
 		{id: 'dataset', title: 'Dataset.'},
 		{id: 'dictionary', title: 'Dictionary'},
 		{id: 'editedBook', title: 'Edited Book'},
