@@ -27,11 +27,23 @@ The main parser function. This will take a string or buffer to process and retur
 
 The `options` parameter is an optional object of properties.
 
-| Option        | Type    | Default | Description                                                                                          |
-|---------------|---------|---------|------------------------------------------------------------------------------------------------------|
-| `fixes`       | Object  | `{}`    | Object containing fixes behaviour to apply to each returned reference. These are all run in parallel |
-| `fixes.dates` | Boolean | `false` | Apply the behaviour of `reflib.fix.dates(ref)` before returning the reference via event handler      |
-| `fixes.pages` | Boolean | `false` | Apply the behaviour of `reflib.fix.pages(ref)` before returning the reference via event handler      |
+| Option          | Type    | Default | Description                                                                                       |
+|-----------------|---------|---------|---------------------------------------------------------------------------------------------------|
+| `fixes`         | Object  | `{}`    | Object containing fixes behaviour to apply to each returned reference                             |
+| `fixes.authors` | Boolean | `false` | Apply the behaviour of `reflib.fix.authors(ref)` before returning the reference via event handler |
+| `fixes.dates`   | Boolean | `false` | Apply the behaviour of `reflib.fix.dates(ref)` before returning the reference via event handler   |
+| `fixes.pages`   | Boolean | `false` | Apply the behaviour of `reflib.fix.pages(ref)` before returning the reference via event handler   |
+
+
+For example, the below example enables all fixes:
+
+	reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), {
+		fixes: {
+			authors: true,
+			dates: true,
+			pages: true,
+		},
+	}).on('ref', function(ref) { /* ... */ });
 
 
 If the final, optional `callback` parameter is specified the *entire* library will be returned as an array in the form `callback(error, references)`. Due to the shear size of some libraries this method is **not** recommended unless you know your RAM can safely hold this potencially huge arrray.
