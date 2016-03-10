@@ -5,6 +5,7 @@ var fsPath = require('path');
 var moment = require('moment');
 
 module.exports = {
+	// .supported - Supported file types {{{
 	supported: [
 		{
 			id: 'endnotexml',
@@ -21,6 +22,59 @@ module.exports = {
 			driver: require('reflib-json'),
 		},
 	],
+	// }}}
+
+	// .refTypes - Supported reference types {{{
+	refTypes: [
+		{id: 'aggregatedDatabase', title: 'Aggregated Database'},
+		{id: 'ancientText', title: 'Ancient Text'},
+		{id: 'artwork', title: 'Artwork'},
+		{id: 'audiovisualMaterial', title: 'Audiovisual Material'},
+		{id: 'bill', title: 'Bill'},
+		{id: 'blog', title: 'Blog'},
+		{id: 'book', title: 'Book'},
+		{id: 'bookSection', title: 'Book Section'},
+		{id: 'case', title: 'Case'},
+		{id: 'catalog', title: 'Catalog'},
+		{id: 'chartOrTable', title: 'Chart or Table'},
+		{id: 'classicalWork', title: 'Classical Work'},
+		{id: 'computerProgram', title: 'Computer Program'},
+		{id: 'conferencePaper', title: 'Conference Paper'},
+		{id: 'conferenceProceedings', title:', Conference Proceedings'},
+		{id: 'dataset', title: 'Dataset.'},
+		{id: 'dictionary', title: 'Dictionary'},
+		{id: 'editedBook', title: 'Edited Book'},
+		{id: 'electronicArticle', title: 'Electronic Article'},
+		{id: 'electronicBookSection', title:', Electronic Book Section'},
+		{id: 'encyclopedia', title: 'Encyclopedia'},
+		{id: 'equation', title: 'Equation'},
+		{id: 'figure', title: 'Figure'},
+		{id: 'filmOrBroadcast', title: 'Film or Broadcast'},
+		{id: 'generic', title: 'Generic'},
+		{id: 'governmentDocument', title: 'Government Document'},
+		{id: 'grant', title: 'Grant'},
+		{id: 'hearing', title: 'Hearing'},
+		{id: 'journalArticle', title: 'Journal Article'},
+		{id: 'legalRuleOrRegulation', title:', Legal Rule or Regulation'},
+		{id: 'magazineArticle', title: 'Magazine Article'},
+		{id: 'manuscript', title: 'Manuscript'},
+		{id: 'map', title: 'Map'},
+		{id: 'music', title: 'Music'},
+		{id: 'newspaperArticle', title: 'Newspaper Article'},
+		{id: 'onlineDatabase', title: 'Online Database'},
+		{id: 'onlineMultimedia', title: 'Online Multimedia'},
+		{id: 'pamphlet', title: 'Pamphlet'},
+		{id: 'patent', title: 'Patent'},
+		{id: 'personalCommunication', title: 'Personal Communication'},
+		{id: 'report', title: 'Report'},
+		{id: 'serial', title: 'Serial'},
+		{id: 'standard', title: 'Standard'},
+		{id: 'statute', title: 'Statute'},
+		{id: 'thesis', title: 'Thesis'},
+		{id: 'unpublished', title: 'Unpublished Work'},
+		{id: 'web', title: 'Web Page'},
+	],
+	// }}}
 
 	identify: function(filename) {
 		var ext = fsPath.extname(filename).toLowerCase();

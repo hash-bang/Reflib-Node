@@ -119,6 +119,19 @@ Function to return the supported driver from a file name.
 	// -> 'endnotexml'
 
 
+refTypes
+--------
+A collection of all supported reference types.
+
+NOTE: This is based off the EndNote specification. If anything is missing please contact the author.
+
+	var reflib = require('reflib');
+
+	console.log(reflib.types)
+	// e.g
+	// [..., {id: 'journalArticle', title: 'Journal Article'}, ...]
+
+
 supported
 ---------
 A collection of all supported drivers.
