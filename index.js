@@ -88,12 +88,12 @@ module.exports = {
 		var self = this;
 
 		// Deal with arguments {{{
-		if (_.isString(format) && _.isString(input) && _.isObject(options) && _.isFunction(callback)) {
+		if (_.isString(format) && !_.isEmpty(input) && _.isObject(options) && _.isFunction(callback)) {
 			// No changes
-		} else if (_.isString(format) && _.isString(input) && _.isFunction(options)) { // Omitted options
+		} else if (_.isString(format) && !_.isEmpty(input) && _.isFunction(options)) { // Omitted options
 			callback = options;
 			options = {};
-		} else if (_.isString(format) && (_.isString(input) || _.isBuffer(input))) { // Omitted options + callback
+		} else if (_.isString(format) && !_.isEmpty(input)) { // Omitted options + callback
 			// No changes
 		} else {
 			throw new Error('Parse must be called in the form: parse(format, input, [options], [callback])');

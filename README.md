@@ -10,7 +10,7 @@ API
 
 parse(driver, content, [options], [callback])
 --------------
-The main parser function. This will take a string or buffer to process and return an emitter which should call `ref` for each reference found.
+The main parser function. This will take a string, buffer or stream to process and return an emitter which should call `ref` for each reference found.
 
 	var reflib = require('reflib');
 	reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'))
