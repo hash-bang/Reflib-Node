@@ -20,6 +20,9 @@ The main parser function. This will take a string, buffer or stream to process a
 		.on('ref', function(ref) {
 			console.log('FOUND A REFERENCE', ref);
 		})
+		.on('progress', function(current, max) {
+			console.log('Reading position', current);
+		})
 		.on('end', function() {
 			console.log('All done');
 		});
@@ -65,6 +68,9 @@ This is a shortcut of the `identify()` and `parse()` methods together to have Re
 		})
 		.on('ref', function(ref) {
 			console.log('FOUND A REFERENCE', ref);
+		})
+		.on('progress', function(current, max) {
+			console.log('Reading position', current);
 		})
 		.on('end', function() {
 			console.log('All done');
@@ -240,6 +246,7 @@ A reference type can be one of the following. Each is translated from and to its
 	dictionary
 	editedBook
 	electronicArticle
+	electronicBook
 	electronicBookSection
 	encyclopedia
 	equation
