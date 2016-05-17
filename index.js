@@ -45,6 +45,7 @@ module.exports = {
 		{id: 'dictionary', title: 'Dictionary'},
 		{id: 'editedBook', title: 'Edited Book'},
 		{id: 'electronicArticle', title: 'Electronic Article'},
+		{id: 'electronicBook', title:', Electronic Book'},
 		{id: 'electronicBookSection', title:', Electronic Book Section'},
 		{id: 'encyclopedia', title: 'Encyclopedia'},
 		{id: 'equation', title: 'Equation'},
