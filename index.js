@@ -136,6 +136,9 @@ module.exports = {
 					reflibEmitter.emit('ref', ref);
 				}
 			})
+			.on('progress', function(cur, max) {
+				reflibEmitter.emit('progress', cur, max);
+			})
 			.on('end', function() {
 				if (callback) {
 					callback(null, refs);
