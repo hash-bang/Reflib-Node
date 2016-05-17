@@ -80,6 +80,8 @@ See the `parse()` function for a description of supported options.
 
 If the final, optional `callback` is specified the function returns in the same way as `parse()`.
 
+NOTE: In order to correctly fire the `progress` event `parseFile()` defaults to using `fs.readFile` instead of `fs.createReadStream()` this is because buffers have a *known* length and streams have an *unknown* length. If you wish to read very large files you may wish to use the `parse()` event with `fs.createReadStream()` manually.
+
 
 output(options)
 ---------------

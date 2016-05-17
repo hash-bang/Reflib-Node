@@ -150,7 +150,7 @@ module.exports = {
 	parseFile: function(path, options, callback) {
 		var driver = this.identify(path);
 		if (!driver) throw new Error('File type is unsupported');
-		return this.parse(driver, fs.createReadStream(path), options, callback);
+		return this.parse(driver, fs.readFileSync(path), options, callback);
 	},
 
 	output: function(options) {
