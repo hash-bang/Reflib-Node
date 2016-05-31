@@ -15,6 +15,13 @@ module.exports = {
 			driver: require('reflib-endnotexml'),
 		},
 		{
+			id: 'medline',
+			name: 'MEDLINE / PubMed file',
+			ext: ['.nbib'],
+			filename: 'medline.nbib',
+			driver: require('reflib-medline'),
+		},
+		{
 			id: 'json',
 			name: 'JSON file',
 			ext: ['.json'],

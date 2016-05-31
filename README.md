@@ -275,5 +275,6 @@ A reference type can be one of the following. Each is translated from and to its
 	standard
 	statute
 	thesis
+	unknown
 	unpublished
 	web
