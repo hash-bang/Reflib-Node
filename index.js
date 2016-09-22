@@ -143,7 +143,9 @@ module.exports = {
 					reflibEmitter.emit('ref', ref);
 				}
 			})
-			.on('progress', reflibEmitter.emit.bind(this, 'progress', cur, max))
+			.on('progress', function(cur, max) {
+				reflibEmitter.emit('progress', cur, max);
+			})
 			.on('end', function() {
 				if (callback) {
 					callback(null, refs);
