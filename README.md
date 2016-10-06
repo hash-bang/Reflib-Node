@@ -92,6 +92,7 @@ The options object must at least contain `stream` and `content` properties. Othe
 | Option           | Type                   | Description                                                                                     |
 |------------------|------------------------|-------------------------------------------------------------------------------------------------|
 | stream           | Stream.Writable stream | The stream object to output content into                                                        |
+| format           | String                 | The driver to use when formatting the data                                                      |
 | defaultType      | String                 | Some libraries must have a reference type for each reference, if that is omitted use this value |
 | encode           | Callback               | Overridable callback to use on each reference output                                            |
 | escape           | Callback               | Overridable callback to use when encoding text                                                  |
