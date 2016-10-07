@@ -2,7 +2,15 @@ Reflib
 ======
 Reference library processing for Node.
 
-This is a ported version of the original [Reflib for PHP](https://github.com/hash-bang/RefLib)
+This is the internal component to parse and output reference libraries. If you would like something with a user interface you may wish to look at one of the following:
+
+* [reflib-cli](https://github.com/hash-bang/Reflib-CLI) - The command line interface to Reflib
+* [Systematic Review Accelerator](http://crebp-sra.com) - Online tools to manage reference libraries
+
+
+
+This module is a ported version of the original [Reflib for PHP](https://github.com/hash-bang/RefLib)
+
 
 
 API
