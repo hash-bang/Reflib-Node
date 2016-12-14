@@ -7,6 +7,7 @@ This is the internal component to parse and output reference libraries. If you w
 * [reflib-cli](https://github.com/hash-bang/Reflib-CLI) - The command line interface to Reflib
 * [Systematic Review Accelerator](http://crebp-sra.com) - Online tools to manage reference libraries
 
+This module is the main API, for individual drivers [see the relevent NPM module](https://www.npmjs.com/search?q=reflib).
 
 
 This module is a ported version of the original [Reflib for PHP](https://github.com/hash-bang/RefLib)
