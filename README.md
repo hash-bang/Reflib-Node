@@ -197,8 +197,8 @@ Reference fields
 ----------------
 Each reference is made up of the following fields. Each field is optional and may or may not be supported by each Reflib driver.
 
-| Field             | Type               | Description              |
-|-------------------|--------------------|--------------------------|
+| Field             | Type               | Description              | Aliases |
+|-------------------|--------------------|--------------------------|---------|
 | recNumber         | Number             | The sorting number of the reference |
 | type              | String             | A supported [reference type](#reference-types) |
 | title             | String             | The reference's main title |
@@ -209,14 +209,14 @@ Each reference is made up of the following fields. Each field is optional and ma
 | pages             | String             | The page reference, usually in the format `123-4` |
 | volume            | String             |
 | number            | String             |
-| isbn              | String             |
+| isbn              | String             | | ISSN |
 | abstract          | String             |
 | label             | String             |
 | caption           | String             |
 | notes             | String             |
 | address           | String             |
 | researchNotes     | String             |
-| tags              | Array (of Strings) | Any tags that apply to the reference |
+| tags              | Array (of Strings) | Any tags that apply to the reference | keywords |
 | accessDate        | String             |
 | accession         | String             |
 | doi               | String             |
