@@ -22,6 +22,13 @@ module.exports = {
 			driver: require('reflib-medline'),
 		},
 		{
+			id: 'ris',
+			name: 'RIS file',
+			ext: ['.ris'],
+			filename: 'ris.ris',
+			driver: require('reflib-ris'),
+		},
+		{
 			id: 'json',
 			name: 'JSON file',
 			ext: ['.json'],
