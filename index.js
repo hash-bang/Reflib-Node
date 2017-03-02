@@ -201,9 +201,9 @@ module.exports = {
 		dates: function(ref, options) {
 			var settings = _.defaults(options, {
 				dateFormats: [
-					{format: 'MM-DD-YYYY', year: true, month: true, day: true}, 
-					{format: 'DD/MM/YYYY', year: true, month: true, day: true}, 
-					{format: 'DD-MM-YYYY', year: true, month: true, day: true}, 
+					{format: 'MM-DD-YYYY', year: true, month: true, day: true},
+					{format: 'DD/MM/YYYY', year: true, month: true, day: true},
+					{format: 'DD-MM-YYYY', year: true, month: true, day: true},
 					{format: 'YYYY-MM-DD', year: true, month: true, day: true},
 					{format: 'Do MMMM YY', year: true, month: true, day: true},
 					{format: 'Do MMMM YYYY', year: true, month: true, day: true},
