@@ -7,6 +7,7 @@ This is the internal component to parse and output reference libraries. If you w
 * [reflib-cli](https://github.com/hash-bang/Reflib-CLI) - The command line interface to Reflib
 * [Systematic Review Accelerator](http://crebp-sra.com) - Online tools to manage reference libraries
 
+This module is the main API, for individual drivers [see the relevent NPM module](https://www.npmjs.com/search?q=reflib).
 
 RefLib currently supports the following format for read / write operations:
 
@@ -26,21 +27,22 @@ parse(driver, content, [options], [callback])
 --------------
 The main parser function. This will take a string, buffer or stream to process and return an emitter which should call `ref` for each reference found.
 
-	var reflib = require('reflib');
-	reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'))
-		.on('error', function(err) {
-			console.log('ERROR:', err);
-		})
-		.on('ref', function(ref) {
-			console.log('FOUND A REFERENCE', ref);
-		})
-		.on('progress', function(current, max) {
-			console.log('Reading position', current);
-		})
-		.on('end', function() {
-			console.log('All done');
-		});
-
+```javascript
+var reflib = require('reflib');
+reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'))
+	.on('error', function(err) {
+		console.log('ERROR:', err);
+	})
+	.on('ref', function(ref) {
+		console.log('FOUND A REFERENCE', ref);
+	})
+	.on('progress', function(current, max) {
+		console.log('Reading position', current);
+	})
+	.on('end', function() {
+		console.log('All done');
+	});
+```
 
 The `options` parameter is an optional object of properties.
 
@@ -52,43 +54,47 @@ The `options` parameter is an optional object of properties.
 | `fixes.pages`   | Boolean | `false` | Apply the behaviour of `reflib.fix.pages(ref)` before returning the reference via event handler   |
 
 
-For example, the below example enables all fixes:
+For example, the below imports a file while enabling all fixes:
 
-	reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), {
-		fixes: {
-			authors: true,
-			dates: true,
-			pages: true,
-		},
-	}).on('ref', function(ref) { /* ... */ });
-
+```javascript
+reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), {
+	fixes: {
+		authors: true,
+		dates: true,
+		pages: true,
+	},
+}).on('ref', function(ref) { /* ... */ });
+```
 
 If the final, optional `callback` parameter is specified the *entire* library will be returned as an array in the form `callback(error, references)`. Due to the shear size of some libraries this method is **not** recommended unless you know your RAM can safely hold this potencially huge arrray.
 
-	reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), function(err, refs) {
-		console.log('Error is', err);
-		console.log('Refs are', refs);
-	});
-
+```javascript
+reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), function(err, refs) {
+	console.log('Error is', err);
+	console.log('Refs are', refs);
+});
+```
 
 parseFile(path, [options], [callback])
 ------------------
 This is a shortcut of the `identify()` and `parse()` methods together to have RefLib read and process a file:
 
-	var reflib = require('reflib');
-	reflib.parseFile('./test/data/endnote.xml')
-		.on('error', function(err) {
-			console.log('ERROR:', err);
-		})
-		.on('ref', function(ref) {
-			console.log('FOUND A REFERENCE', ref);
-		})
-		.on('progress', function(current, max) {
-			console.log('Reading position', current);
-		})
-		.on('end', function() {
-			console.log('All done');
-		});
+```javascript
+var reflib = require('reflib');
+reflib.parseFile('./test/data/endnote.xml')
+	.on('error', function(err) {
+		console.log('ERROR:', err);
+	})
+	.on('ref', function(ref) {
+		console.log('FOUND A REFERENCE', ref);
+	})
+	.on('progress', function(current, max) {
+		console.log('Reading position', current);
+	})
+	.on('end', function() {
+		console.log('All done');
+	});
+```
 
 See the `parse()` function for a description of supported options.
 
@@ -122,14 +128,16 @@ This is a shortcut of the `identify()` and `output()` methods together to have R
 
 `refs` can be an array of references, a single object or a callback to provide references. See the `output()` function for more information.
 
-	var reflib = require('reflib');
-	reflib.outputFile('./test/data/endnote.xml', refs)
-		.on('error', function(err) {
-			console.log('ERROR:', err);
-		})
-		.on('end', function() {
-			console.log('All done');
-		});
+```javascript
+var reflib = require('reflib');
+reflib.outputFile('./test/data/endnote.xml', refs)
+	.on('error', function(err) {
+		console.log('ERROR:', err);
+	})
+	.on('end', function() {
+		console.log('All done');
+	});
+```
 
 The final `callback` parameter is optional. If it is specified it is attached automatically as a listener on the 'error' and 'end' events.
 
@@ -138,9 +146,10 @@ identify(path)
 --------------
 Function to return the supported driver from a file name.
 
-	reflib.identify('./test/data/endnote.xml');
-	// -> 'endnotexml'
-
+```javascript
+reflib.identify('./test/data/endnote.xml');
+// -> 'endnotexml'
+```
 
 refTypes
 --------
@@ -148,23 +157,25 @@ A collection of all supported reference types.
 
 NOTE: This is based off the EndNote specification. If anything is missing please contact the author.
 
-	var reflib = require('reflib');
+```javascript
+var reflib = require('reflib');
 
-	console.log(reflib.types)
-	// e.g
-	// [..., {id: 'journalArticle', title: 'Journal Article'}, ...]
-
+console.log(reflib.types)
+// e.g
+// [..., {id: 'journalArticle', title: 'Journal Article'}, ...]
+```
 
 supported
 ---------
 A collection of all supported drivers.
 
-	var reflib = require('reflib');
+```javascript
+var reflib = require('reflib');
 
-	console.log(reflib.supported)
-	// e.g
-	// {id: 'endnotexml', name: 'EndNote XML file', ext: ['.xml'], driver [object]}
-
+console.log(reflib.supported)
+// e.g
+// {id: 'endnotexml', name: 'EndNote XML file', ext: ['.xml'], driver [object]}
+```
 
 fix.authors(reference)
 ----------------------
