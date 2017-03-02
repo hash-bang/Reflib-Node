@@ -8,9 +8,15 @@ This is the internal component to parse and output reference libraries. If you w
 * [Systematic Review Accelerator](http://crebp-sra.com) - Online tools to manage reference libraries
 
 
+RefLib currently supports the following format for read / write operations:
+
+* [EndNote XML](https://github.com/hash-bang/Reflib-EndNoteXML)
+* [JSON](https://github.com/hash-bang/Reflib-JSON)
+* [MEDLINE / PubMed](https://github.com/hash-bang/Reflib-MEDLINE)
+* [RIS](https://github.com/hash-bang/Reflib-RIS)
+
 
 This module is a ported version of the original [Reflib for PHP](https://github.com/hash-bang/RefLib)
-
 
 
 API
