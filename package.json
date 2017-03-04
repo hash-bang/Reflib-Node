@@ -1,6 +1,6 @@
 {
   "name": "reflib",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Citation reference library I/O",
   "main": "index.js",
   "scripts": {
@@ -25,10 +25,10 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
-    "reflib-endnotexml": "^1.3.5",
-    "reflib-json": "^1.2.2",
-    "reflib-medline": "^1.0.3",
-    "reflib-ris": "^1.0.1"
+    "reflib-endnotexml": "^1.3.6",
+    "reflib-json": "^1.2.3",
+    "reflib-medline": "^1.0.4",
+    "reflib-ris": "^1.0.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
