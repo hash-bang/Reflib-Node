@@ -1,6 +1,6 @@
 {
   "name": "reflib",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Citation reference library I/O",
   "main": "index.js",
   "scripts": {
