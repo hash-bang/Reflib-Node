@@ -6,6 +6,7 @@ This is the internal component to parse and output reference libraries. If you w
 
 * [reflib-cli](https://github.com/hash-bang/Reflib-CLI) - The command line interface to Reflib
 * [Systematic Review Accelerator](http://crebp-sra.com) - Online tools to manage reference libraries
+* [reflib-util](https://github.com/hash-bang/Reflib-utils) - Utilities to work with Reflib references or libraries
 
 This module is the main API, for individual drivers [see the relevent NPM module](https://www.npmjs.com/search?q=reflib).
 
@@ -233,7 +234,7 @@ Each reference is made up of the following fields. Each field is optional and ma
 | notes             | String             |
 | address           | String             |
 | researchNotes     | String             |
-| keywords              | Array (of Strings) | Any tags that apply to the reference | tags |
+| keywords          | Array (of Strings) | Any tags that apply to the reference | tags |
 | accessDate        | String             |
 | accession         | String             |
 | doi               | String             |
