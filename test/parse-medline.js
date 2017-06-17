@@ -42,7 +42,7 @@ describe('MEDLINE parser - test #1', function() {
 		expect(sample.abstract).to.match(/^OBJECTIVE: The purpose of this study/);
 		expect(sample.abstract).to.match(/RESULTS: In the present study/);
 		expect(sample.abstract).to.match(/for patients with age>\/=45 years\) and RRS\.$/);
-		expect(sample.tags).to.deep.equal(['Central lymph node metastasis (CLNM)', 'Differentiated thyroid carcinoma (DTC)', 'Prophylactic central neck dissection (pCND)', 'Recurrence risk stratification (RRS)', 'Risk factors', 'TNM staging']);
+		expect(sample.keywords).to.deep.equal(['Central lymph node metastasis (CLNM)', 'Differentiated thyroid carcinoma (DTC)', 'Prophylactic central neck dissection (pCND)', 'Recurrence risk stratification (RRS)', 'Risk factors', 'TNM staging']);
 		expect(sample).to.have.property('doi', '10.1016/j.bulcan.2016.04.003 [doi]');
 	});
 });
