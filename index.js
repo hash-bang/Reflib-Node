@@ -3,6 +3,7 @@ var events = require('events');
 var fs = require('fs');
 var fsPath = require('path');
 var moment = require('moment');
+var promisify = require('util').promisify;
 
 var reflib = module.exports = {
 	// .supported - Supported file types {{{
@@ -257,3 +258,10 @@ var reflib = module.exports = {
 	},
 	// }}}
 };
+
+// Compute promises {{{
+reflib.promises = _(reflib)
+	.pickBy(v => _.isFunction(v))
+	.mapValues(v => promisify(v))
+	.value();
+// }}}

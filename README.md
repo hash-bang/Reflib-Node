@@ -166,6 +166,11 @@ console.log(reflib.types)
 // [..., {id: 'journalArticle', title: 'Journal Article'}, ...]
 ```
 
+promises
+--------
+Object containing Promise compatible versions for all the internal functionality. e.g. `reflib.promises.parseFile()`
+
+
 supported
 ---------
 A collection of all supported drivers.
