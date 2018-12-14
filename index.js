@@ -93,9 +93,7 @@ var reflib = module.exports = {
 
 	identify: function(filename) {
 		var ext = fsPath.extname(filename).toLowerCase();
-		var found = _.find(reflib.supported, function(format) {
-			return _.includes(format.ext, ext);
-		});
+		var found = reflib.supported.find(format => _.includes(format.ext, ext));
 		return found ? found.id : false;
 	},
 
@@ -115,7 +113,7 @@ var reflib = module.exports = {
 		}
 		// }}}
 
-		var supported = _.find(reflib.supported, {id: format});
+		var supported = reflib.supported.find(s => s.id == format);
 		if (!supported) throw new Error('Format is unsupported: ' + format);
 
 		var settings = _.defaults(options, {
@@ -174,7 +172,7 @@ var reflib = module.exports = {
 		if (!_.isObject(options)) throw new Error('output(options) must be an object');
 		if (!options.format) throw new Error('output(options) must specify a format');
 
-		var supported = _.find(reflib.supported, {id: options.format});
+		var supported = reflib.supported.find(s => s.id == options.format);
 		if (!supported) throw new Error('Format is unsupported: ' + options.format);
 
 		return supported.driver.output(options);
