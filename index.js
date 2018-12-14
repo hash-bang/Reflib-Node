@@ -4,7 +4,7 @@ var fs = require('fs');
 var fsPath = require('path');
 var moment = require('moment');
 
-module.exports = {
+var reflib = module.exports = {
 	// .supported - Supported file types {{{
 	supported: [
 		{
@@ -93,7 +93,7 @@ module.exports = {
 
 	identify: function(filename) {
 		var ext = fsPath.extname(filename).toLowerCase();
-		var found = _.find(this.supported, function(format) {
+		var found = _.find(reflib.supported, function(format) {
 			return _.includes(format.ext, ext);
 		});
 		return found ? found.id : false;
@@ -115,7 +115,7 @@ module.exports = {
 		}
 		// }}}
 
-		var supported = _.find(this.supported, {id: format});
+		var supported = _.find(reflib.supported, {id: format});
 		if (!supported) throw new Error('Format is unsupported: ' + format);
 
 		var settings = _.defaults(options, {
@@ -165,26 +165,26 @@ module.exports = {
 	},
 
 	parseFile: function(path, options, callback) {
-		var driver = this.identify(path);
+		var driver = reflib.identify(path);
 		if (!driver) throw new Error('File type is unsupported');
-		return this.parse(driver, fs.createReadStream(path), options, callback);
+		return reflib.parse(driver, fs.createReadStream(path), options, callback);
 	},
 
 	output: function(options) {
 		if (!_.isObject(options)) throw new Error('output(options) must be an object');
 		if (!options.format) throw new Error('output(options) must specify a format');
 
-		var supported = _.find(this.supported, {id: options.format});
+		var supported = _.find(reflib.supported, {id: options.format});
 		if (!supported) throw new Error('Format is unsupported: ' + options.format);
 
 		return supported.driver.output(options);
 	},
 
 	outputFile: function(path, refs, callback) {
-		var driver = this.identify(path);
+		var driver = reflib.identify(path);
 		if (!driver) throw new Error('File type is unsupported for path: ' + path);
 		var stream = fs.createWriteStream(path);
-		var out = this.output({
+		var out = reflib.output({
 			format: driver,
 			stream: stream,
 			content: refs,
