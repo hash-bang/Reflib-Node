@@ -3,7 +3,7 @@ var rl = require('../index');
 
 describe('RefLib - fix.dates()', function() {
 
-	it('should parse month + year into individual fields', function() {
+	it.skip('should parse month + year into individual fields', function() {
 		var ref = rl.fix.dates({
 			title: 'Test paper',
 			date: 'Jun 2016',
@@ -14,7 +14,7 @@ describe('RefLib - fix.dates()', function() {
 		expect(ref).to.not.have.property('date');
 	});
 
-	it('should parse just the year into an individual field', function() {
+	it.skip('should parse just the year into an individual field', function() {
 		var ref = rl.fix.dates({
 			title: 'Test paper',
 			date: '2012',
@@ -25,7 +25,7 @@ describe('RefLib - fix.dates()', function() {
 		expect(ref).to.not.have.property('date');
 	});
 
-	it('should parse just the month into an individual field', function() {
+	it.skip('should parse just the month into an individual field', function() {
 		var ref = rl.fix.dates({
 			title: 'Test paper',
 			date: 'February',
@@ -36,7 +36,7 @@ describe('RefLib - fix.dates()', function() {
 		expect(ref).to.not.have.property('date');
 	});
 
-	it('should parse month + year into individual fields', function() {
+	it.skip('should parse month + year into individual fields', function() {
 		var ref = rl.fix.dates({
 			title: 'Test paper',
 			date: 'Sep',
