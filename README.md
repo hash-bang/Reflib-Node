@@ -25,7 +25,7 @@ API
 ===
 
 parse(driver, content, [options], [callback])
---------------
+---------------------------------------------
 The main parser function. This will take a string, buffer or stream to process and return an emitter which should call `ref` for each reference found.
 
 ```javascript
@@ -77,7 +77,7 @@ reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), function(
 ```
 
 parseFile(path, [options], [callback])
-------------------
+--------------------------------------
 This is a shortcut of the `identify()` and `parse()` methods together to have RefLib read and process a file:
 
 ```javascript
@@ -118,13 +118,14 @@ The options object must at least contain `stream` and `content` properties. Othe
 | encode           | Callback               | Overridable callback to use on each reference output                                            |
 | escape           | Callback               | Overridable callback to use when encoding text                                                  |
 | content          | Array or Object or Callback | The reference library to output. If an array each item is used in turn, if an object a single item is output, if a callback this is called with the arguments (next, batchNo) until it returns null. The callback function can return a single object or an array |
+| fields           | Undefined, string, array, true | If undefined only supported fields are output, if an array only those specified fields are output, if true all fields even those not recognised are output. If the input is a string it is split into an array as a CSV |
 
 
 See the output tests of individual drivers for more examples.
 
 
-outputFile(path, refs, [callback])
-----------------------
+outputFile(path, refs, [options], [callback])
+----------------------------------
 This is a shortcut of the `identify()` and `output()` methods together to have RefLib setup a stream and dump refs into a file.
 
 `refs` can be an array of references, a single object or a callback to provide references. See the `output()` function for more information.

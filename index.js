@@ -164,6 +164,13 @@ var reflib = module.exports = {
 	},
 
 	parseFile: function(path, options, callback) {
+		// Argument mangling {{{
+		if (_.isFunction(options)) { // path, callback
+			callback = options;
+			options = {};
+		}
+		// }}}
+
 		var driver = reflib.identify(path);
 		if (!driver) throw new Error('File type is unsupported');
 		return reflib.parse(driver, fs.createReadStream(path), options, callback);
@@ -176,10 +183,22 @@ var reflib = module.exports = {
 		var supported = reflib.supported.find(s => s.id == options.format);
 		if (!supported) throw new Error('Format is unsupported: ' + options.format);
 
-		return supported.driver.output(options);
+		var settings = {
+			...options,
+			fields: _.isString(options.fields) ? options.fields.split(/\s*,\s*/) : undefined, // Split field list into an array if given a CSV
+		};
+
+		return supported.driver.output(settings);
 	},
 
-	outputFile: function(path, refs, callback) {
+	outputFile: function(path, refs, options, callback) {
+		// Argument mangling {{{
+		if (_.isFunction(options)) { // path, refs, callback
+			callback = options;
+			options = {};
+		}
+		// }}}
+
 		var driver = reflib.identify(path);
 		if (!driver) throw new Error('File type is unsupported for path: ' + path);
 		var stream = fs.createWriteStream(path);
@@ -187,6 +206,7 @@ var reflib = module.exports = {
 			format: driver,
 			stream: stream,
 			content: refs,
+			...options,
 		});
 		if (callback) { // If optional callback is specified attach it as a handler
 			out.on('error', callback);
