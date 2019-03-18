@@ -27,14 +27,14 @@
   },
   "dependencies": {
     "lodash": "^4.17.11",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "reflib-endnotexml": "^1.3.12",
     "reflib-json": "^1.2.5",
-    "reflib-medline": "^1.0.4",
+    "reflib-medline": "^1.0.5",
     "reflib-ris": "^1.0.5"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^6.0.2"
   }
 }
