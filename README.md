@@ -13,9 +13,11 @@ This module is the main API, for individual drivers [see the relevent NPM module
 RefLib currently supports the following format for read / write operations:
 
 * [EndNote XML](https://github.com/hash-bang/Reflib-EndNoteXML)
+* [CSV](https://github.com/hash-bang/Reflib-CSV)
 * [JSON](https://github.com/hash-bang/Reflib-JSON)
 * [MEDLINE / PubMed](https://github.com/hash-bang/Reflib-MEDLINE)
 * [RIS](https://github.com/hash-bang/Reflib-RIS)
+* [TSV](https://github.com/hash-bang/Reflib-TSV)
 
 
 This module is a ported version of the original [Reflib for PHP](https://github.com/hash-bang/RefLib)

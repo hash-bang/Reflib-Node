@@ -9,11 +9,25 @@ var reflib = module.exports = {
 	// .supported - Supported file types {{{
 	supported: [
 		{
+			id: 'csv',
+			name: 'Comma Seperated Values',
+			ext: ['.csv'],
+			filename: 'references.csv',
+			driver: require('reflib-csv'),
+		},
+		{
 			id: 'endnotexml',
 			name: 'EndNote XML file',
 			ext: ['.xml'],
 			filename: 'endnote.xml',
 			driver: require('reflib-endnotexml'),
+		},
+		{
+			id: 'json',
+			name: 'JSON file',
+			ext: ['.json'],
+			filename: 'library.json',
+			driver: require('reflib-json'),
 		},
 		{
 			id: 'medline',
@@ -30,11 +44,11 @@ var reflib = module.exports = {
 			driver: require('reflib-ris'),
 		},
 		{
-			id: 'json',
-			name: 'JSON file',
-			ext: ['.json'],
-			filename: 'library.json',
-			driver: require('reflib-json'),
+			id: 'tsv',
+			name: 'Tab Seperated Values',
+			ext: ['.tsv'],
+			filename: 'references.tsv',
+			driver: require('reflib-tsv'),
 		},
 	],
 	// }}}
