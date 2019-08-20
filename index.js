@@ -197,10 +197,9 @@ var reflib = module.exports = {
 		var supported = reflib.supported.find(s => s.id == options.format);
 		if (!supported) throw new Error('Format is unsupported: ' + options.format);
 
-		var settings = {
-			...options,
+		var settings = _.defaults(options, {
 			fields: _.isString(options.fields) ? options.fields.split(/\s*,\s*/) : undefined, // Split field list into an array if given a CSV
-		};
+		});
 
 		return supported.driver.output(settings);
 	},
@@ -216,12 +215,11 @@ var reflib = module.exports = {
 		var driver = reflib.identify(path);
 		if (!driver) throw new Error('File type is unsupported for path: ' + path);
 		var stream = fs.createWriteStream(path);
-		var out = reflib.output({
+		var out = reflib.output(_.defaults(options, {
 			format: driver,
 			stream: stream,
 			content: refs,
-			...options,
-		});
+		}));
 		if (callback) { // If optional callback is specified attach it as a handler
 			out.on('error', callback);
 			out.on('finish', callback);
