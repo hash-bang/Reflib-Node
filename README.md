@@ -313,3 +313,8 @@ A reference type can be one of the following. Each is translated from and to its
 	unknown
 	unpublished
 	web
+
+Credits
+=======
+Developed in part for the [Bond University Institute for Evidence-Based Healthcare](https://iebh.bond.edu.au).
+Please contact [the author](mailto:matt_carter@bond.edu.au) with any issues.
