@@ -105,6 +105,8 @@ If the final, optional `callback` is specified the function returns in the same 
 
 NOTE: In order to correctly fire the `progress` event `parseFile()` defaults to using `fs.readFile` instead of `fs.createReadStream()` this is because buffers have a *known* length and streams have an *unknown* length. If you wish to read very large files you may wish to use the `parse()` event with `fs.createReadStream()` manually.
 
+NOTE: Use `reflib.promises.parseFile()` for the promisable version of this function.
+
 
 output(options)
 ---------------
@@ -144,6 +146,8 @@ reflib.outputFile('./test/data/endnote.xml', refs)
 ```
 
 The final `callback` parameter is optional. If it is specified it is attached automatically as a listener on the 'error' and 'end' events.
+
+NOTE: Use `reflib.promises.outputFile()` for the promisable version of this function.
 
 
 identify(path)
@@ -264,55 +268,57 @@ Reference Types
 ---------------
 A reference type can be one of the following. Each is translated from and to its individual drivers own supported format (for example if using EndNoteXML 'dataset' is translated to 'Dataset.' with EndNote ID 59 automatically).
 
-	aggregatedDatabase
-	ancientText
-	artwork
-	audiovisualMaterial
-	bill
-	blog
-	book
-	bookSection
-	case
-	catalog
-	chartOrTable
-	classicalWork
-	computerProgram
-	conferencePaper
-	conferenceProceedings
-	dataset
-	dictionary
-	editedBook
-	electronicArticle
-	electronicBook
-	electronicBookSection
-	encyclopedia
-	equation
-	figure
-	filmOrBroadcast
-	generic
-	governmentDocument
-	grant
-	hearing
-	journalArticle
-	legalRuleOrRegulation
-	magazineArticle
-	manuscript
-	map
-	music
-	newspaperArticle
-	onlineDatabase
-	onlineMultimedia
-	pamphlet
-	patent
-	personalCommunication
-	report
-	serial
-	standard
-	statute
-	thesis
-	unknown
-	unpublished
-	web
+```
+aggregatedDatabase
+ancientText
+artwork
+audiovisualMaterial
+bill
+blog
+book
+bookSection
+case
+catalog
+chartOrTable
+classicalWork
+computerProgram
+conferencePaper
+conferenceProceedings
+dataset
+dictionary
+editedBook
+electronicArticle
+electronicBook
+electronicBookSection
+encyclopedia
+equation
+figure
+filmOrBroadcast
+generic
+governmentDocument
+grant
+hearing
+journalArticle
+legalRuleOrRegulation
+magazineArticle
+manuscript
+map
+music
+newspaperArticle
+onlineDatabase
+onlineMultimedia
+pamphlet
+patent
+personalCommunication
+report
+serial
+standard
+statute
+thesis
+unknown
+unpublished
+web
+```
 
 Credits
 =======
