@@ -118,10 +118,10 @@ The options object must at least contain `stream` and `content` properties. Othe
 |------------------|------------------------|-------------------------------------------------------------------------------------------------|
 | stream           | Stream.Writable stream | The stream object to output content into                                                        |
 | format           | String                 | The driver to use when formatting the data                                                      |
+| content          | Array or Object or Callback | The reference library to output. If an array each item is used in turn, if an object a single item is output, if a callback this is called with the arguments (next, batchNo) until it returns null. The callback function can return a single object or an array |
 | defaultType      | String                 | Some libraries must have a reference type for each reference, if that is omitted use this value |
 | encode           | Callback               | Overridable callback to use on each reference output                                            |
 | escape           | Callback               | Overridable callback to use when encoding text                                                  |
-| content          | Array or Object or Callback | The reference library to output. If an array each item is used in turn, if an object a single item is output, if a callback this is called with the arguments (next, batchNo) until it returns null. The callback function can return a single object or an array |
 | fields           | Undefined, string, array, true | If undefined only supported fields are output, if an array only those specified fields are output, if true all fields even those not recognised are output. If the input is a string it is split into an array as a CSV |
 
 

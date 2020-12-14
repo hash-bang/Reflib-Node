@@ -7,6 +7,15 @@ var promisify = require('util').promisify;
 
 var reflib = module.exports = {
 	// .supported - Supported file types {{{
+	/**
+	* Collection of supported RefLib drivers and their details
+	* @type {array<Object>}
+	* @property {string} id The unique identifier of the driver
+	* @property {string} name Human readable description of the driver
+	* @property {array<string>} ext File extensions supported by the driver
+	* @property {string} filename Default filename to use when outputting
+	* @property {Object} driver NPM module of the driver
+	*/
 	supported: [
 		{
 			id: 'csv',
@@ -54,6 +63,12 @@ var reflib = module.exports = {
 	// }}}
 
 	// .refTypes - Supported reference types {{{
+	/**
+	* A collection of supported RefLib reference types
+	* @type {array<Object>}
+	* @property {string} id The internal ID of the reference type
+	* @property {string} title The human readable description of the reference type
+	*/
 	refTypes: [
 		{id: 'aggregatedDatabase', title: 'Aggregated Database'},
 		{id: 'ancientText', title: 'Ancient Text'},
@@ -106,12 +121,36 @@ var reflib = module.exports = {
 	],
 	// }}}
 
+
+	/**
+	* Identify the RefLib driver to use from a filename
+	* @param {string} filename
+	* @returns {string} Either a RefLib driver ID from Reflib.supported or boolean False if the file is unrecognised
+	*/
 	identify: function(filename) {
 		var ext = fsPath.extname(filename).toLowerCase();
 		var found = reflib.supported.find(format => _.includes(format.ext, ext));
 		return found ? found.id : false;
 	},
 
+
+	/**
+	* Parse an input stream, buffer or string into references
+	* @param {string} format The Reflib driver to use, must conform to the ID of a member of Reflib.supported
+	* @param {string|Buffer|ReadableStream} input The input to parse
+	* @param {Object} [options] Additional options to use when parsing
+	* @param {Object} [options.fixes] List of fixes to apply while parsing
+	* @param {boolean} [options.authors=false] Apply the behaviour of `reflib.fix.authors(ref)`
+	* @param {boolean} [options.authors=false] Apply the behaviour of `reflib.fix.dates(ref)`
+	* @param {boolean} [options.authors=false] Apply the behaviour of `reflib.fix.pages(ref)`
+	* @param {function} [callback] Callback to call as `(refs)` when done
+	* @returns {EventEmitter} An EventEmitter instance
+	*
+	* @emits ref Emitted as `(ref)` for each reference parsed
+	* @emits error Emitted as `(error)` if an error occurs
+	* @emits progress Emitted as `(currentProgress, maxProgress)` while parsing to show progress (if known)
+	* @emits end Emitted as `()` when parsing has completed
+	*/
 	parse: function(format, input, options, callback) {
 		var self = this;
 
@@ -177,6 +216,16 @@ var reflib = module.exports = {
 		return reflibEmitter;
 	},
 
+
+	/**
+	* Wrapper around parse() which opens a file as as stream and parses it automatically
+	* @param {string} path The path of the file to parse
+	* @param {Object} [options] Additional options to use when parsing, see `parse()` for full details
+	* @param {function} [callback] Callback to call as `(refs)` when done
+	* @returns {EventEmitter} An EventEmitter instance
+	* @see parse
+	* @see promises.parseFile
+	*/
 	parseFile: function(path, options, callback) {
 		// Argument mangling {{{
 		if (_.isFunction(options)) { // path, callback
@@ -190,6 +239,20 @@ var reflib = module.exports = {
 		return reflib.parse(driver, fs.createReadStream(path), options, callback);
 	},
 
+
+	/**
+	* Output a reference library using the requested driver
+	* @param {Object} options Options to use while outputting
+	* @param {WritableStream} options.stream Writable stream used to output
+	* @param {string} options.format The Reflib driver to use, must conform to the ID of a member of Reflib.supported
+	* @param {array<Object>|function} options.content reference library to output. If an array each item is used in turn, if an object a single item is output, if a callback this is called with the arguments `(next, batchNo)` until it returns null. The callback function can return a single object or an array
+	* @param {string} [options.defaultType] If the driver requires a default reference type this value is used if that field is omitted from the input
+	* @param {function} [options.encode] Overridable callback to use on each reference output
+	* @param {function} [options.escape] Overridable callback to use when encoding text
+	* @param {string|array<String>|boolean} [options.fields] If undefined only supported fields are output, if an array only those specified fields are output, if true all fields even those not recognised are output. If the input is a string it is split into an array as a CSV
+	* @returns {WritableStream} A WriteableSteam instance which will fire `.on('end')` when writing has finished
+	* @see promises.output
+	*/
 	output: function(options) {
 		if (!_.isObject(options)) throw new Error('output(options) must be an object');
 		if (!options.format) throw new Error('output(options) must specify a format');
@@ -204,6 +267,17 @@ var reflib = module.exports = {
 		return supported.driver.output(settings);
 	},
 
+
+	/**
+	* Output a reference library to a file using the requested driver
+	* @param {string} path The file path to write to
+	* @param {array<Object>} refs The array of references to write
+	* @param {Object} options Options to use while outputting, see `output()` for more details
+	* @returns {WritableStream} A WriteableSteam instance which will fire `.on('end')` when writing has finished
+	* @param {function} [callback] Callback to call as `(refs)` when done
+	* @see output
+	* @see promises.outputFile
+	*/
 	outputFile: function(path, refs, options, callback) {
 		// Argument mangling {{{
 		if (_.isFunction(options)) { // path, refs, callback
@@ -228,7 +302,16 @@ var reflib = module.exports = {
 	},
 
 	// Fixes {{{
+	/**
+	* A collection of reference fixes
+	* @type {Object}
+	*/
 	fix: {
+		/**
+		* Attempt to split mangled author fields into an array of strings
+		* @param {Object} ref The reference to fix
+		* @returns {Object} The fixed reference
+		*/
 		authors: function(ref, options) {
 			if (_.isArray(ref.authors) && ref.authors.length == 1 && /;/.test(ref.authors[0]))
 				ref.authors = ref.authors[0].split(/\s*;\s*/);
@@ -236,6 +319,12 @@ var reflib = module.exports = {
 			return ref;
 		},
 
+
+		/**
+		* Attempt to fix mangled date formats
+		* @param {Object} ref The reference to fix
+		* @returns {Object} The fixed reference
+		*/
 		dates: function(ref, options) {
 			var settings = _.defaults(options, {
 				dateFormats: [
@@ -271,6 +360,12 @@ var reflib = module.exports = {
 			return ref;
 		},
 
+
+		/**
+		* Attempt to fix mangled page formats
+		* @param {Object} ref The reference to fix
+		* @returns {Object} The fixed reference
+		*/
 		pages: function(ref) {
 			var p = /^\s*([0-9]+)\s*--?\s*([0-9]+)\s*$/.exec(ref.pages);
 			if (p) {
