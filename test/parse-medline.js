@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var expect = require('chai').expect;
 var fs = require('fs');
 var rl = require('../index');
@@ -25,7 +24,7 @@ describe('MEDLINE parser - test #1', function() {
 	});
 
 	it('end count should be accurate', function() {
-		expect(_.keys(data)).to.have.length(20);
+		expect(Object.keys(data)).to.have.length(20);
 	});
 
 	it('should return random sample (prophylactic central neck dissection)', function() {

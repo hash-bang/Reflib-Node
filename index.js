@@ -1,8 +1,15 @@
-var _ = require('lodash');
+var _ = {
+	mapValues: require('lodash/mapValues'),
+	pickBy: require('lodash/pickBy'),
+};
+var dateFns = {
+	isValid: require('date-fns/isValid'),
+	format: require('date-fns/format'),
+	parse: require('date-fns/parse'),
+};
 var events = require('events');
 var fs = require('fs');
 var fsPath = require('path');
-var moment = require('moment');
 var promisify = require('util').promisify;
 
 var reflib = module.exports = {
@@ -129,7 +136,7 @@ var reflib = module.exports = {
 	*/
 	identify: function(filename) {
 		var ext = fsPath.extname(filename).toLowerCase();
-		var found = reflib.supported.find(format => _.includes(format.ext, ext));
+		var found = reflib.supported.find(format => format.ext.includes(ext));
 		return found ? found.id : false;
 	},
 
@@ -155,12 +162,12 @@ var reflib = module.exports = {
 		var self = this;
 
 		// Deal with arguments {{{
-		if (_.isString(format) && !_.isEmpty(input) && _.isObject(options) && _.isFunction(callback)) {
+		if (format && typeof format == 'string' && typeof options == 'object' && typeof callback == 'function') {
 			// No changes
-		} else if (_.isString(format) && !_.isEmpty(input) && _.isFunction(options)) { // Omitted options
+		} else if (typeof format == 'string' && input && typeof options == 'function') { // Omitted options
 			callback = options;
 			options = {};
-		} else if (_.isString(format) && !_.isEmpty(input)) { // Omitted options + callback
+		} else if (typeof format == 'string' && input) { // Omitted options + callback
 			// No changes
 		} else {
 			throw new Error('Parse must be called in the form: parse(format, input, [options], [callback])');
@@ -170,13 +177,14 @@ var reflib = module.exports = {
 		var supported = reflib.supported.find(s => s.id == format);
 		if (!supported) throw new Error('Format is unsupported: ' + format);
 
-		var settings = _.defaults(options, {
+		var settings = {
 			fixes: {
 				authors: false,
 				dates: false,
 				pages: false,
 			},
-		});
+			...options,
+		};
 
 		var refs = [];
 		var reflibEmitter = new events.EventEmitter();
@@ -228,7 +236,7 @@ var reflib = module.exports = {
 	*/
 	parseFile: function(path, options, callback) {
 		// Argument mangling {{{
-		if (_.isFunction(options)) { // path, callback
+		if (typeof options == 'function') { // path, callback
 			callback = options;
 			options = {};
 		}
@@ -254,15 +262,16 @@ var reflib = module.exports = {
 	* @see promises.output
 	*/
 	output: function(options) {
-		if (!_.isObject(options)) throw new Error('output(options) must be an object');
+		if (typeof options != 'object') throw new Error('output(options) must be an object');
 		if (!options.format) throw new Error('output(options) must specify a format');
 
 		var supported = reflib.supported.find(s => s.id == options.format);
 		if (!supported) throw new Error('Format is unsupported: ' + options.format);
 
-		var settings = _.defaults(options, {
-			fields: _.isString(options.fields) ? options.fields.split(/\s*,\s*/) : undefined, // Split field list into an array if given a CSV
-		});
+		var settings = {
+			fields: typeof options.fields == 'string' ? options.fields.split(/\s*,\s*/) : undefined, // Split field list into an array if given a CSV
+			...options,
+		};
 
 		return supported.driver.output(settings);
 	},
@@ -280,7 +289,7 @@ var reflib = module.exports = {
 	*/
 	outputFile: function(path, refs, options, callback) {
 		// Argument mangling {{{
-		if (_.isFunction(options)) { // path, refs, callback
+		if (typeof options == 'function') { // path, refs, callback
 			callback = options;
 			options = {};
 		}
@@ -289,11 +298,12 @@ var reflib = module.exports = {
 		var driver = reflib.identify(path);
 		if (!driver) throw new Error('File type is unsupported for path: ' + path);
 		var stream = fs.createWriteStream(path);
-		var out = reflib.output(_.defaults(options, {
+		var out = reflib.output({
 			format: driver,
 			stream: stream,
 			content: refs,
-		}));
+			...options,
+		});
 		if (callback) { // If optional callback is specified attach it as a handler
 			out.on('error', callback);
 			out.on('finish', callback);
@@ -313,7 +323,7 @@ var reflib = module.exports = {
 		* @returns {Object} The fixed reference
 		*/
 		authors: function(ref, options) {
-			if (_.isArray(ref.authors) && ref.authors.length == 1 && /;/.test(ref.authors[0]))
+			if (Array.isArray(ref.authors) && ref.authors.length == 1 && /;/.test(ref.authors[0]))
 				ref.authors = ref.authors[0].split(/\s*;\s*/);
 
 			return ref;
@@ -326,36 +336,31 @@ var reflib = module.exports = {
 		* @returns {Object} The fixed reference
 		*/
 		dates: function(ref, options) {
-			var settings = _.defaults(options, {
+			var settings = {
 				dateFormats: [
-					{format: 'MM-DD-YYYY', year: true, month: true, day: true},
-					{format: 'DD/MM/YYYY', year: true, month: true, day: true},
-					{format: 'DD-MM-YYYY', year: true, month: true, day: true},
-					{format: 'YYYY-MM-DD', year: true, month: true, day: true},
-					{format: 'Do MMMM YY', year: true, month: true, day: true},
-					{format: 'Do MMMM YYYY', year: true, month: true, day: true},
-					{format: 'MMM YYYY', year: true, month: true, day: false},
-					{format: 'MMM', year: false, month: true, day: false},
-					{format: 'MMMM', year: false, month: true, day: false},
-					{format: 'YYYY', year: true, month: false, day: false},
+					{format: 'MM-dd-yyyy', year: true, month: true, day: true, output: v => dateFns.format(v, 'yyyy-MM-dd')},
+					{format: 'dd/MM/yyyy', year: true, month: true, day: true, output: v => dateFns.format(v, 'yyyy-MM-dd')},
+					{format: 'dd-MM-yyyy', year: true, month: true, day: true, output: v => dateFns.format(v, 'yyyy-MM-dd')},
+					{format: 'yyyy-MM-dd', year: true, month: true, day: true, output: v => dateFns.format(v, 'yyyy-MM-dd')},
+					{format: 'do MMMM yy', year: true, month: true, day: true, output: v => dateFns.format(v, 'yyyy-MM-dd')},
+					{format: 'do MMMM yyyy', year: true, month: true, day: true, output: v => dateFns.format(v, 'yyyy-MM-dd')},
+					{format: 'MMM yyyy', year: true, month: true, day: false, output: v => dateFns.format(v, 'MMM yyyy')},
+					{format: 'MMM', year: false, month: true, day: false, output: v => dateFns.format(v, 'MMM')},
+					{format: 'MMMM', year: false, month: true, day: false, output: v => dateFns.format(v, 'MMM')},
+					{format: 'yyyy', year: true, month: false, day: false, output: v => dateFns.format(v, 'yyyy')},
 				],
-			});
+				...options,
+			};
 
-			var baseYear = 1000; // Anything equal to this is assumed not to provide a year
-			moment.now = function() { return +new Date(baseYear, 1, 1) }; // Force Moment to use baseYear as the basis when parsing
-			var momentParsed = moment(ref.date, settings.dateFormats.map(function(f) { return f.format }), true);
+			var parsed = settings.dateFormats.find(attempt =>
+				dateFns.isValid(
+					dateFns.parse(ref.date, attempt.format, new Date())
+				)
+			);
 
-			if (ref.date && momentParsed.isValid()) { // Moment matched something
-				var dateFormat = settings.dateFormats.find(function(f) { return (f.format == momentParsed._f) });
-				if (!dateFormat) throw new Error('Moment parsed date but cannot locate matching format it used!');
-
-				if (dateFormat.year && dateFormat.month && dateFormat.day) { // Date format is fully formed
-					ref.date = momentParsed.toDate();
-				}
-
-				if (dateFormat.year) ref.year = momentParsed.year();
-				if (dateFormat.month) ref.month = momentParsed.format('MMM');
-			}
+			if (parsed && parsed.year) ref.year = dateFns.format(dateFns.parse(ref.date, parsed.format, new Date()), 'yyyy');
+			if (parsed && parsed.month) ref.month = dateFns.format(dateFns.parse(ref.date, parsed.format, new Date()), 'MMM');
+			if (parsed) ref.date = parsed.output(dateFns.parse(ref.date, parsed.format, new Date()));
 
 			return ref;
 		},
@@ -369,8 +374,8 @@ var reflib = module.exports = {
 		pages: function(ref) {
 			var p = /^\s*([0-9]+)\s*--?\s*([0-9]+)\s*$/.exec(ref.pages);
 			if (p) {
-				var numericLeft = _.toNumber(p[1]);
-				var numericRight = _.toNumber(p[2]);
+				var numericLeft = parseInt(p[1]);
+				var numericRight = parseInt(p[2]);
 
 				if (numericRight < numericLeft) { // Relative number reference e.g. '123 - 4'
 					numericRight = numericLeft.toString().substr(0, numericLeft.toString().length - numericRight.toString().length) + numericRight.toString();
@@ -387,8 +392,9 @@ var reflib = module.exports = {
 };
 
 // Compute promises {{{
-reflib.promises = _(reflib)
-	.pickBy(v => _.isFunction(v))
-	.mapValues(v => promisify(v))
-	.value();
+reflib.promises =
+	_.mapValues(
+		_.pickBy(reflib, v => typeof v == 'function')
+		, v => promisify(v)
+	);
 // }}}

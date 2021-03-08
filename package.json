@@ -1,6 +1,6 @@
 {
   "name": "reflib",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "Citation reference library I/O",
   "main": "index.js",
   "scripts": {
@@ -26,17 +26,17 @@
     "node": ">=10.x.x"
   },
   "dependencies": {
-    "lodash": "^4.17.20",
-    "moment": "^2.29.1",
-    "reflib-csv": "^1.0.4",
-    "reflib-endnotexml": "^1.4.1",
-    "reflib-json": "^1.3.0",
-    "reflib-medline": "^1.0.6",
-    "reflib-ris": "^1.0.6",
-    "reflib-tsv": "^1.0.0"
+    "date-fns": "^2.19.0",
+    "lodash": "^4.17.21",
+    "reflib-csv": "^1.0.6",
+    "reflib-endnotexml": "^1.4.3",
+    "reflib-json": "^1.3.1",
+    "reflib-medline": "^1.0.7",
+    "reflib-ris": "^1.0.7",
+    "reflib-tsv": "^1.0.1"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^8.2.1"
+    "chai": "^4.3.3",
+    "mocha": "^8.3.1"
   }
 }

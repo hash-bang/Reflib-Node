@@ -9,7 +9,7 @@ describe('RefLib - fix.dates()', function() {
 			date: 'Jun 2016',
 		});
 
-		expect(ref).to.have.property('year', 2016);
+		expect(ref).to.have.property('year', '2016');
 		expect(ref).to.have.property('month', 'Jun');
 		expect(ref).to.not.have.property('date');
 	});
@@ -20,7 +20,7 @@ describe('RefLib - fix.dates()', function() {
 			date: '2012',
 		});
 
-		expect(ref).to.have.property('year', 2012);
+		expect(ref).to.have.property('year', '2012');
 		expect(ref).to.not.have.property('month');
 		expect(ref).to.not.have.property('date');
 	});
@@ -53,10 +53,10 @@ describe('RefLib - fix.dates()', function() {
 			date: '1st December 2013',
 		});
 
-		expect(ref).to.have.property('year', 2013);
+		expect(ref).to.have.property('year', '2013');
 		expect(ref).to.have.property('month', 'Dec');
 		expect(ref).to.have.property('date');
-		expect(ref.date).to.deep.equal(new Date(2013, 11, 1));
+		expect(ref.date).to.deep.equal('2013-12-01');
 	});
 
 	it('should parse full dates #2', function() {
@@ -65,9 +65,9 @@ describe('RefLib - fix.dates()', function() {
 			date: '15/03/2014',
 		});
 
-		expect(ref).to.have.property('year', 2014);
+		expect(ref).to.have.property('year', '2014');
 		expect(ref).to.have.property('month', 'Mar');
 		expect(ref).to.have.property('date');
-		expect(ref.date).to.deep.equal(new Date(2014, 2, 15));
+		expect(ref.date).to.deep.equal('2014-03-15');
 	});
 });
