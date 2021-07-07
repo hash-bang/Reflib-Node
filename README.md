@@ -69,7 +69,7 @@ reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), {
 }).on('ref', function(ref) { /* ... */ });
 ```
 
-If the final, optional `callback` parameter is specified the *entire* library will be returned as an array in the form `callback(error, references)`. Due to the shear size of some libraries this method is **not** recommended unless you know your RAM can safely hold this potencially huge arrray.
+If the final, optional `callback` parameter is specified the *entire* library will be returned as an array in the form `callback(error, references)`. Due to the shear size of some libraries this method is **not** recommended unless you know your RAM can safely hold this potentially huge arrray.
 
 ```javascript
 reflib.parse('endnotexml', fs.readFileSync('./test/data/endnote.xml'), function(err, refs) {
