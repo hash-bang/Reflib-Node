@@ -196,7 +196,7 @@ var reflib = module.exports = {
 		 */
 		emitProgress = _.throttle(function(cur, max) {
 			reflibEmitter.emit('progress', cur, max);
-		}, 100),
+		}, 200, { trailing: false }),
 
 		supported.driver.parse(input)
 			.on('error', function(err) {
