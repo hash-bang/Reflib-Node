@@ -230,7 +230,7 @@ Each reference is made up of the following fields. Each field is optional and ma
 | Field             | Type               | Description              | Aliases |
 |-------------------|--------------------|--------------------------|---------|
 | recNumber         | Number             | The sorting number of the reference |
-| type              | String             | A supported [reference type](#reference-types) |
+| type              | String             | A supported [reference type](#reference-types) (e.g. journalArticle) |
 | title             | String             | The reference's main title |
 | journal           | String             | The reference's secondary title, this is usually the journal for most published papers |
 | authors           | Array (of Strings) | An array of each Author in the originally specified format |
