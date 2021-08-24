@@ -194,8 +194,8 @@ var reflib = module.exports = {
 		 * @param {number} cur Number of refs parsed so far
 		 * @param {number} max Total number of refs
 		 */
-		emitProgress = _.throttle(function(cur, max) {
-			reflibEmitter.emit('progress', cur, max);
+		emitProgress = _.throttle(function(cur, max, emitter) {
+			emitter.emit('progress', cur, max);
 		}, 200, { trailing: false }),
 
 		supported.driver.parse(input)
@@ -220,7 +220,7 @@ var reflib = module.exports = {
 				}
 			})
 			.on('progress', function(cur, max) {
-				emitProgress(cur, max);
+				emitProgress(cur, max, reflibEmitter);
 			})
 			.on('end', function() {
 				if (callback) {
