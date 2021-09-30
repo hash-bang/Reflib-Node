@@ -1,6 +1,7 @@
 var _ = {
 	mapValues: require('lodash/mapValues'),
 	pickBy: require('lodash/pickBy'),
+	throttle: require('lodash/throttle'),
 };
 var dateFns = {
 	isValid: require('date-fns/isValid'),
@@ -140,7 +141,6 @@ var reflib = module.exports = {
 		return found ? found.id : false;
 	},
 
-
 	/**
 	* Parse an input stream, buffer or string into references
 	* @param {string} format The Reflib driver to use, must conform to the ID of a member of Reflib.supported
@@ -189,6 +189,15 @@ var reflib = module.exports = {
 		var refs = [];
 		var reflibEmitter = new events.EventEmitter();
 
+		/**
+		 * Emit progress throttled every 100ms
+		 * @param {number} cur Number of refs parsed so far
+		 * @param {number} max Total number of refs
+		 */
+		emitProgress = _.throttle(function(cur, max, emitter) {
+			emitter.emit('progress', cur, max);
+		}, 200, { trailing: false }),
+
 		supported.driver.parse(input)
 			.on('error', function(err) {
 				if (callback) {
@@ -211,7 +220,7 @@ var reflib = module.exports = {
 				}
 			})
 			.on('progress', function(cur, max) {
-				reflibEmitter.emit('progress', cur, max);
+				emitProgress(cur, max, reflibEmitter);
 			})
 			.on('end', function() {
 				if (callback) {
