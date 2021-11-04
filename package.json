@@ -28,7 +28,7 @@
   "type": "module",
   "exports": {
     ".": "./lib/default.js",
-    "./readFile": "./lib/readFile.js"
+    "./*": "./lib/*.js"
   },
   "devDependencies": {
     "chai": "^4.3.4",
