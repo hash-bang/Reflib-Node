@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {createReadStream} from 'node:fs';
-import {parseStream} from '../lib/parseStream.js';
+import * as reflib from '../lib/default.js';
 import fspath from 'node:path';
 let __dirname = fspath.resolve(fspath.dirname(decodeURI(new URL(import.meta.url).pathname)));
 
@@ -15,7 +15,7 @@ describe('Module: JSON', ()=> {
 			.then(()=> new Promise((resolve, reject) => {
 				let refs = {}, refsCount = 0;
 
-				parseStream('json', createReadStream(`${__dirname}/data/json/json1.json`))
+				reflib.parseStream('json', createReadStream(`${__dirname}/data/json/json1.json`))
 					.on('end', ()=> resolve({refs, refsCount}))
 					.on('error', reject)
 					.on('ref', ref => {
@@ -110,6 +110,19 @@ describe('Module: JSON', ()=> {
 				expect(ref.urls).to.deep.equal(['http://ovidsp.ovid.com/ovidweb.cgi?T=JS&CSC=Y&NEWS=N&PAGE=fulltext&D=med4&AN=16100154', 'http://ZL9EQ5LQ7V.search.serialssolutions.com/?sid=OVID:medline&id=pmid:16100154&id=doi:&issn=0012-3692&isbn=&volume=128&issue=2&spage=684&pages=684-9&date=2005&title=Chest&atitle=Prospective+randomized+trial+of+silver+nitrate+vs+talc+slurry+in+pleurodesis+for+symptomatic+malignant+pleural+effusions.&aulast=Paschoalini+Mda&pid=%3Cauthor%3EPaschoalini+Mda+S%3BVargas+FS%3BMarchi+E%3BPereira+JR%3BJatene+FB%3BAntonangelo+L%3BLight+RW%3C%2Fauthor%3E%3CAN%3E16100154%3C%2FAN%3E%3CDT%3EClinical+Trial%3C%2FDT%3E'], 'urls');
 				expect(ref).to.have.property('researchNotes', 'Paschoalini Mda S\rVargas FS\rMarchi E\rPereira JR\rJatene FB\rAntonangelo L\rLight RW');
 				// }}}
+			})
+
+	});
+	// }}}
+
+	// JSON file #2 (via promise) {{{
+	it('should parse a JSON file #2 (via promise)', function () {
+		this.timeout(30 * 1000); //= 30s
+
+		return reflib.parseFile(`${__dirname}/data/json/json2.json`)
+			.then(refs => {
+				let ref;
+				expect(refs).to.have.length(3820);
 			})
 
 	});
