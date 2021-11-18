@@ -33,5 +33,9 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "mocha": "^9.1.3"
+  },
+  "dependencies": {
+    "bfj": "^7.0.2",
+    "bfj-collections": "^1.0.5"
   }
 }
