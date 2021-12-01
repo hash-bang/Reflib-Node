@@ -2,11 +2,14 @@ import {expect} from 'chai';
 import {createReadStream} from 'node:fs';
 import * as reflib from '../lib/default.js';
 import fspath from 'node:path';
+import mlog from 'mocha-logger';
+import temp from 'temp';
+
 let __dirname = fspath.resolve(fspath.dirname(decodeURI(new URL(import.meta.url).pathname)));
 
 describe('Module: JSON', ()=> {
 
-	// JSON file #1 (via stream reader) {{{
+	// Parse JSON file #1 (via stream reader) {{{
 	it('should parse a JSON file #1 (via stream reader)', function () {
 		this.timeout(30 * 1000); //= 30s
 
