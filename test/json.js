@@ -118,11 +118,11 @@ describe('Module: JSON', ()=> {
 	});
 	// }}}
 
-	// JSON file #2 (via promise) {{{
-	it('should parse a JSON file #2 (via promise)', function () {
+	// Parse JSON file #2 (via promise) {{{
+	it('should read a JSON file #2 (via promise)', function () {
 		this.timeout(30 * 1000); //= 30s
 
-		return reflib.parseFile(`${__dirname}/data/json/json2.json`)
+		return reflib.readFile(`${__dirname}/data/json/json2.json`)
 			.then(refs => {
 				let ref;
 				expect(refs).to.have.length(3820);
