@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {createReadStream} from 'node:fs';
+import {createReadStream, createWriteStream} from 'node:fs';
 import * as reflib from '../lib/default.js';
 import fspath from 'node:path';
 import mlog from 'mocha-logger';
@@ -128,6 +128,45 @@ describe('Module: JSON', ()=> {
 				expect(refs).to.have.length(3820);
 			})
 
+	});
+	// }}}
+
+	// Write JSON file (via promise) {{{
+	it('should write a JSON file #1 (via promise)', function() {
+		this.timeout(30 * 1000); //= 30s
+
+		let tempPath = temp.path({prefix: 'reflib-', suffix: '.json'});
+		return Promise.resolve()
+			.then(()=> reflib.readFile(`${__dirname}/data/json/json2.json`))
+			.then(refs => reflib.writeFile(tempPath, refs))
+			.then(()=> mlog.log(`JSON file available at ${tempPath}`))
+			.then(()=> reflib.readFile(tempPath))
+			.then(refs => {
+				expect(refs).to.be.an('array');
+				expect(refs).to.have.length(3820);
+			})
+	});
+	// }}}
+
+	// Stream JSON file {{{
+	it('should stream a JSON file', function() {
+		this.timeout(30 * 1000); //= 30s
+
+		let tempPath = temp.path({prefix: 'reflib-', suffix: '.json'});
+		return new Promise((resolve, reject) => {
+			let output = reflib.writeStream('json', createWriteStream(tempPath));
+
+			reflib.readStream('json', createReadStream(`${__dirname}/data/json/json1.json`))
+				.on('ref', ref => output.write(ref))
+				.on('end', ()=> output.end().then(resolve))
+				.on('error', reject)
+		})
+			.then(()=> mlog.log(`JSON file available at ${tempPath}`))
+			.then(()=> reflib.readFile(tempPath))
+			.then(refs => {
+				expect(refs).to.be.an('array');
+				expect(refs).to.have.length(1988);
+			})
 	});
 	// }}}
 

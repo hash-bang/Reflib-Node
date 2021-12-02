@@ -18,3 +18,34 @@ export function readStream(stream, options) {
 
 	return emitter;
 };
+
+
+/**
+*/
+export function writeStream(stream, options) {
+	var settings = {
+		lineSuffix: '\n',
+		...options,
+	};
+
+	let lastRef; // Hold last refrence string in memory so we know when we've reached the end (last item shoulnd't have a closing comma)
+
+	return {
+		start: ()=> {
+			stream.write('[\n');
+			return Promise.resolve();
+		},
+		write: ref => {
+			if (lastRef) stream.write(lastRef + ',' + settings.lineSuffix); // Flush last reference to disk with comma
+			lastRef = JSON.stringify(ref);
+			return Promise.resolve();
+		},
+		end: ()=> {
+			if (lastRef) stream.write(lastRef + settings.lineSuffix); // Flush final reference to disk without final comma
+			stream.write(']');
+			return new Promise((resolve, reject) =>
+				stream.end(err => err ? reject(err) : resolve())
+			);
+		},
+	};
+};
