@@ -1,6 +1,9 @@
 import Emitter from '../shared/emitter.js';
 import bfjc from 'bfj-collections';
 
+/**
+* @see modules/interface.js
+*/
 export function readStream(stream, options) {
 	let recNumber = 1;
 	let emitter = Emitter();
@@ -21,6 +24,9 @@ export function readStream(stream, options) {
 
 
 /**
+* @see modules/interface.js
+* @param {Object} [options] Additional options to use when parsing
+* @param {string} [options.lineSuffix='\n'] Optional line suffix for each output line of JSON
 */
 export function writeStream(stream, options) {
 	var settings = {
