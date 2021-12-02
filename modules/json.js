@@ -1,7 +1,7 @@
 import Emitter from '../shared/emitter.js';
 import bfjc from 'bfj-collections';
 
-export function parseStream(stream, options) {
+export function readStream(stream, options) {
 	let recNumber = 1;
 	let emitter = Emitter();
 

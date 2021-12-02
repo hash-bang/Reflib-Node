@@ -18,7 +18,7 @@ describe('Module: JSON', ()=> {
 			.then(()=> new Promise((resolve, reject) => {
 				let refs = {}, refsCount = 0;
 
-				reflib.parseStream('json', createReadStream(`${__dirname}/data/json/json1.json`))
+				reflib.readStream('json', createReadStream(`${__dirname}/data/json/json1.json`))
 					.on('end', ()=> resolve({refs, refsCount}))
 					.on('error', reject)
 					.on('ref', ref => {
