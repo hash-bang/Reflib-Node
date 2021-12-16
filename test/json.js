@@ -124,7 +124,6 @@ describe('Module: JSON', ()=> {
 
 		return reflib.readFile(`${__dirname}/data/json/json2.json`)
 			.then(refs => {
-				let ref;
 				expect(refs).to.have.length(3820);
 			})
 
@@ -166,6 +165,33 @@ describe('Module: JSON', ()=> {
 			.then(refs => {
 				expect(refs).to.be.an('array');
 				expect(refs).to.have.length(1988);
+			})
+	});
+	// }}}
+
+	// End-to-end test {{{
+	it.only('should run a parse -> write -> parse test with all references', function() {
+		this.timeout(60 * 1000); //= 1m
+
+		let tempPath = temp.path({prefix: 'reflib-', suffix: '.json'});
+		let originalRefs;
+		return Promise.resolve()
+			.then(()=> mlog.log('Reading ref file'))
+			.then(()=> reflib.readFile(`${__dirname}/data/json/json2.json`))
+			.then(refs => {
+				expect(refs).to.have.length(3820);
+				originalRefs = refs;
+			})
+			.then(()=> mlog.log('Writing ref file'))
+			.then(()=> reflib.writeFile(tempPath, originalRefs))
+			.then(()=> mlog.log(`JSON file available at ${tempPath}`))
+			.then(()=> mlog.log('Re-reading ref file'))
+			.then(()=> reflib.readFile(tempPath))
+			.then(newRefs => {
+				mlog.log('Comparing', newRefs.length, 'references');
+				newRefs.forEach((ref, refOffset) =>
+					expect(ref).to.deep.equal(originalRefs[refOffset])
+				);
 			})
 	});
 	// }}}
