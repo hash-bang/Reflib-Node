@@ -2,6 +2,13 @@ Reflib
 ======
 Reference library processing for Node.
 
+---
+
+**NOTE: This library is now depreciated in favour of [@IEBH/RefLib](https://github.com/IEBH/RefLib) which is ES6 and Browser compatible, has numerous fixes and is much more efficient**
+
+---
+
+
 This is the internal component to parse and output reference libraries. If you would like something with a user interface you may wish to look at one of the following:
 
 * [reflib-cli](https://github.com/hash-bang/Reflib-CLI) - The command line interface to Reflib
